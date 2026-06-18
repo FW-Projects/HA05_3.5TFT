@@ -314,7 +314,7 @@ static void get_handle_error_state(HA01_Handle *this)
 						/* open fan output with actual temp change*/
 						this->system_parameter.sleep_air_data = this->system_parameter.actual_temp * 0.4;
 //						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data * 1.13 + 30);
-						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data);
+						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data * 0.56 + 30);
 					}
 				}
 				else

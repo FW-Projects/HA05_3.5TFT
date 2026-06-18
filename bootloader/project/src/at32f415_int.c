@@ -27,7 +27,6 @@
 /* includes ------------------------------------------------------------------*/
 #include "at32f415_int.h"
 #include "wk_system.h"
-
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
 #include <stdlib.h>
@@ -38,9 +37,8 @@
 
 /* private typedef -----------------------------------------------------------*/
 /* add user code begin private typedef */
-#define LOCAL_DEVICE_ID  0x01
-#define SOFTWARE_VERSTION "V1.0.7"
-#define HARDWARE_VERSTION "V1.0.1"
+#define SOFTWARE_VERSTION "V2.0.5"
+#define HARDWARE_VERSTION "V2.1.0"
 /* add user code end private typedef */
 
 /* private define ------------------------------------------------------------*/
@@ -56,7 +54,9 @@
 /* private variables ---------------------------------------------------------*/
 /* add user code begin private variables */
 extern bool iap_done;
-uint32_t flash_add = 0x08004000;
+extern uint8_t LOCAL_DEVICE_ID_1;
+extern uint8_t LOCAL_DEVICE_ID_2;
+uint32_t flash_add = 0x08002000;
 uint8_t usart1_tx_buff[22];
 uint32_t usart1_crc_buff[258];
 uint8_t usart1_rx_buff[1036];
@@ -238,7 +238,6 @@ void SysTick_Handler(void)
   /* add user code end SysTick_IRQ 0 */
 
   wk_timebase_handler();
-
   /* add user code begin SysTick_IRQ 1 */
 
   /* add user code end SysTick_IRQ 1 */
@@ -260,8 +259,7 @@ void USART1_IRQHandler(void)
         reval = usart_data_receive(USART1);
         usart1_rx_buff[count] = reval;
         count++;
-
-				if(count == 22)
+		if(count == 22)
 		{
 		    convert_data(usart1_rx_buff,usart1_crc_buff,0x01,0x10);
 			uint32_t crc_value = crc_block_calculate(usart1_crc_buff, 4);
@@ -286,7 +284,7 @@ void USART1_IRQHandler(void)
 			}
 
 		}
-		
+
         if (count == 1036)
         {
             count = 0;
@@ -312,7 +310,7 @@ void USART1_IRQHandler(void)
                     if (usart1_rx_buff[2] == 0x04)
                     {
                         /* check app starting address whether 0x08xxxxxx */
-                        if (((*(uint32_t *)(0x08004000 + 4)) & 0xFF000000) == 0x08000000)
+                        if (((*(uint32_t *)(0x08002000 + 4)) & 0xFF000000) == 0x08000000)
                         {
 							iap_done = true;
 
@@ -334,6 +332,7 @@ void USART1_IRQHandler(void)
 
     }
   /* add user code end USART1_IRQ 0 */
+
   /* add user code begin USART1_IRQ 1 */
 
   /* add user code end USART1_IRQ 1 */
@@ -424,8 +423,8 @@ void usart1_send_ok(void)
     usart1_tx_buff[0] = 0xD1;
     usart1_tx_buff[1] = 0x02;
     usart1_tx_buff[2] = 0x02;
-    usart1_tx_buff[3] = 0x00;
-    usart1_tx_buff[4] = LOCAL_DEVICE_ID;
+    usart1_tx_buff[3] = LOCAL_DEVICE_ID_2;
+    usart1_tx_buff[4] = LOCAL_DEVICE_ID_1;
     usart1_tx_buff[5] = 0x00;
     usart1_tx_buff[6] = 0x0A;
     usart1_tx_buff[7] = 0x1D;
@@ -449,9 +448,9 @@ void usart1_send_ok(void)
 
     for (uint8_t i = 0; i < 22; i++)
     {
-        usart_data_transmit(USART1, usart1_tx_buff[i ]);
-        
+        usart_data_transmit(USART1, usart1_tx_buff[i]);
         while (usart_flag_get(USART1, USART_TDC_FLAG) == RESET);
+		
     }
 }
 
@@ -461,11 +460,11 @@ void usart1_send_error(void)
     usart1_tx_buff[0] = 0xD1;
     usart1_tx_buff[1] = 0x02;
     usart1_tx_buff[2] = 0x02;
-    usart1_tx_buff[3] = 0x00;
-    usart1_tx_buff[4] = LOCAL_DEVICE_ID;
+    usart1_tx_buff[3] = LOCAL_DEVICE_ID_2;
+    usart1_tx_buff[4] = LOCAL_DEVICE_ID_1;
     usart1_tx_buff[5] = 0x00;
     usart1_tx_buff[6] = 0x0A;
-    usart1_tx_buff[7] = 0x18;
+    usart1_tx_buff[7] = 0x00;
     usart1_tx_buff[8] = 0x00;
     usart1_tx_buff[9] = 0x00;
     usart1_tx_buff[10] = 0x00;
@@ -486,36 +485,31 @@ void usart1_send_error(void)
 
     for (uint8_t i = 0; i < 22; i++)
     {
-        usart_data_transmit(USART1, usart1_tx_buff[i ]);
-
+        usart_data_transmit(USART1, usart1_tx_buff[i]);
         while (usart_flag_get(USART1, USART_TDC_FLAG) == RESET);
+		
     }
 }
 
 void usart1_connet_pc(void)
 {
-	static bool first_in = true;
-
-    if (first_in)
-    {
-        init_version_parse();
-        first_in = false;
-    }
-	
     uint32_t crc_value = 0;
     usart1_tx_buff[0] = 0xD1;
     usart1_tx_buff[1] = 0x01;
     usart1_tx_buff[2] = 0x01;
-    usart1_tx_buff[3] = 0x00;
-    usart1_tx_buff[4] = LOCAL_DEVICE_ID;
+    usart1_tx_buff[3] = LOCAL_DEVICE_ID_2;
+    usart1_tx_buff[4] = LOCAL_DEVICE_ID_1;
     usart1_tx_buff[5] = 0x00;
     usart1_tx_buff[6] = 0x0A;
+	
     usart1_tx_buff[7] = sw_ver_major;
     usart1_tx_buff[8] = sw_ver_minor;
     usart1_tx_buff[9] = sw_ver_patch;
+	
     usart1_tx_buff[10] = hw_ver_major;
     usart1_tx_buff[11] = hw_ver_minor;
     usart1_tx_buff[12] = hw_ver_patch;
+	
     usart1_tx_buff[13] = 0x00;
     usart1_tx_buff[14] = 0x00;
     usart1_tx_buff[15] = 0x00;
@@ -536,53 +530,41 @@ void usart1_connet_pc(void)
 		
     }
 }
+
+
 static int parse_version_string(const char *str, uint8_t *major, uint8_t *minor, uint8_t *patch)
 {
-    if (str == NULL || str[0] != 'V')
-    {
+    if (str == NULL || str[0] != 'V') {
         return -1;
     }
-
+    
     const char *p = str + 1;  // 跳过 'V'
+    
     // 解析第一个数字
     *major = 0;
-
-    while (*p >= '0' && *p <= '9')
-    {
+    while (*p >= '0' && *p <= '9') {
         *major = *major * 10 + (*p - '0');
         p++;
     }
-
-    if (*p != '.')
-    {
-        return -1;
-    }
-
+    if (*p != '.') return -1;
     p++; // 跳过 '.'
+    
     // 解析第二个数字
     *minor = 0;
-
-    while (*p >= '0' && *p <= '9')
-    {
+    while (*p >= '0' && *p <= '9') {
         *minor = *minor * 10 + (*p - '0');
         p++;
     }
-
-    if (*p != '.')
-    {
-        return -1;
-    }
-
+    if (*p != '.') return -1;
     p++; // 跳过 '.'
+    
     // 解析第三个数字
     *patch = 0;
-
-    while (*p >= '0' && *p <= '9')
-    {
+    while (*p >= '0' && *p <= '9') {
         *patch = *patch * 10 + (*p - '0');
         p++;
     }
-
+    
     // 允许后面有其它字符，忽略即可
     return 0;
 }
@@ -592,4 +574,7 @@ void init_version_parse(void)
     parse_version_string(SOFTWARE_VERSTION, &sw_ver_major, &sw_ver_minor, &sw_ver_patch);
     parse_version_string(HARDWARE_VERSTION, &hw_ver_major, &hw_ver_minor, &hw_ver_patch);
 }
+
+
+
 /* add user code end 1 */

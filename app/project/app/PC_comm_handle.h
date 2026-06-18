@@ -11,7 +11,7 @@
 #define PC_DEVECE_ID     0x00
 
 #define LOCAL_DEVECE_ID_1 0x01
-#define LOCAL_DEVECE_ID_2 0x03
+#define LOCAL_DEVECE_ID_2 0x09
 
 #define PC_RX_BUFF_SIZE  1036
 #define PC_TX_BUFF_SIZE  256

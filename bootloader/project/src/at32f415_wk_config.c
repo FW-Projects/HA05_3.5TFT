@@ -64,8 +64,8 @@
 /**
   * @brief  system clock config program
   * @note   the system clock is configured as follow:
-  *         system clock (sclk)   = hick / 12 * pll_mult
-  *         system clock source   = HICK_VALUE
+  *         system clock (sclk)   = hext * pll_mult
+  *         system clock source   = HEXT_VALUE
   *         - hext                = HEXT_VALUE
   *         - sclk                = 144000000
   *         - ahbdiv              = 1
@@ -74,7 +74,7 @@
   *         - apb1clk             = 72000000
   *         - apb2div             = 2
   *         - apb2clk             = 72000000
-  *         - pll_mult            = 36
+  *         - pll_mult            = 18
   *         - flash_wtcyc         = 4 cycle
   * @param  none
   * @retval none
@@ -112,7 +112,7 @@ void wk_system_clock_config(void)
   }
 
   /* config pll clock resource */
-  crm_pll_config(CRM_PLL_SOURCE_HICK, CRM_PLL_MULT_36);
+  crm_pll_config(CRM_PLL_SOURCE_HEXT, CRM_PLL_MULT_18);
 
   /* enable pll */
   crm_clock_source_enable(CRM_CLOCK_SOURCE_PLL, TRUE);
@@ -165,8 +165,17 @@ void wk_periph_clock_config(void)
   /* enable gpioa periph clock */
   crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, TRUE);
 
+  /* enable gpiob periph clock */
+  crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, TRUE);
+
+  /* enable gpioc periph clock */
+  crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, TRUE);
+
   /* enable gpiod periph clock */
   crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, TRUE);
+
+  /* enable gpiof periph clock */
+  crm_periph_clock_enable(CRM_GPIOF_PERIPH_CLOCK, TRUE);
 
   /* enable usart1 periph clock */
   crm_periph_clock_enable(CRM_USART1_PERIPH_CLOCK, TRUE);

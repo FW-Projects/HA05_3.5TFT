@@ -29,6 +29,7 @@
 #include "wk_crc.h"
 #include "wk_debug.h"
 #include "wk_usart.h"
+#include "wk_gpio.h"
 #include "wk_system.h"
 
 /* private includes ----------------------------------------------------------*/
@@ -57,6 +58,9 @@
 /* private variables ---------------------------------------------------------*/
 /* add user code begin private variables */
 bool iap_done = false;
+
+uint8_t LOCAL_DEVICE_ID_1 = 1;
+uint8_t LOCAL_DEVICE_ID_2 = 9;
 /* add user code end private variables */
 
 /* private function prototypes --------------------------------------------*/
@@ -92,8 +96,12 @@ int main(void)
   /* nvic config. */
   wk_nvic_config();
 
-  /* timebase config. */
+  /* timebase config for
+     void wk_delay_ms(uint32_t delay); */
   wk_timebase_init();
+
+  /* init gpio function. */
+  wk_gpio_config();
 
   /* init usart1 function. */
   wk_usart1_init();
@@ -102,6 +110,7 @@ int main(void)
   wk_crc_init();
 
   /* add user code begin 2 */
+  
     if (flash_upgrade_flag_read() == RESET)
     {
         /* check app starting address whether 0x08xxxxxx */

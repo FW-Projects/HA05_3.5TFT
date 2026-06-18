@@ -3,11 +3,18 @@
 <title>Static Call Graph - [.\objects\AT32F415RBT7_WorkBench.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\objects\AT32F415RBT7_WorkBench.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Thu Jun 18 11:36:05 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Thu Jun 18 18:01:08 2026
 <BR><P>
-<H3>Maximum Stack Usage =         92 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =         92 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-main &rArr; wk_usart1_init &rArr; usart_init &rArr; crm_clocks_freq_get
+__rt_entry_main &rArr; main &rArr; wk_usart1_init &rArr; usart_init &rArr; crm_clocks_freq_get
+<P>
+<H3>
+Functions with no stack information
+</H3><UL>
+ <LI><a href="#[53]">__user_initial_stackheap</a>
+</UL>
+</UL>
 <P>
 <H3>
 Mutually Recursive functions
@@ -70,7 +77,7 @@ Function Pointers
  <LI><a href="#[2e]">SPI2_IRQHandler</a> from startup_at32f415.o(.text) referenced from startup_at32f415.o(RESET)
  <LI><a href="#[6]">SVC_Handler</a> from at32f415_int.o(.text.SVC_Handler) referenced from startup_at32f415.o(RESET)
  <LI><a href="#[9]">SysTick_Handler</a> from at32f415_int.o(.text.SysTick_Handler) referenced from startup_at32f415.o(RESET)
- <LI><a href="#[42]">SystemInit</a> from system_at32f415.o(.text.SystemInit) referenced from startup_at32f415.o(.text)
+ <LI><a href="#[41]">SystemInit</a> from system_at32f415.o(.text.SystemInit) referenced from startup_at32f415.o(.text)
  <LI><a href="#[c]">TAMP_STAMP_IRQHandler</a> from startup_at32f415.o(.text) referenced from startup_at32f415.o(RESET)
  <LI><a href="#[22]">TMR1_BRK_TMR9_IRQHandler</a> from startup_at32f415.o(.text) referenced from startup_at32f415.o(RESET)
  <LI><a href="#[25]">TMR1_CH_IRQHandler</a> from startup_at32f415.o(.text) referenced from startup_at32f415.o(RESET)
@@ -87,35 +94,149 @@ Function Pointers
  <LI><a href="#[31]">USART3_IRQHandler</a> from startup_at32f415.o(.text) referenced from startup_at32f415.o(RESET)
  <LI><a href="#[5]">UsageFault_Handler</a> from at32f415_int.o(.text.UsageFault_Handler) referenced from startup_at32f415.o(RESET)
  <LI><a href="#[a]">WWDT_IRQHandler</a> from startup_at32f415.o(.text) referenced from startup_at32f415.o(RESET)
- <LI><a href="#[43]">__main</a> from entry.o(.ARM.Collect$$$$00000000) referenced from startup_at32f415.o(.text)
- <LI><a href="#[41]">main</a> from main.o(.text.main) referenced from entry9a.o(.ARM.Collect$$$$0000000B)
+ <LI><a href="#[42]">__main</a> from __main.o(!!!main) referenced from startup_at32f415.o(.text)
 </UL>
 <P>
 <H3>
 Global Symbols
 </H3>
-<P><STRONG><a name="[43]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry.o(.ARM.Collect$$$$00000000))
+<P><STRONG><a name="[42]"></a>__main</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, __main.o(!!!main))
+<BR><BR>[Calls]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
+</UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_at32f415.o(.text)
 </UL>
-<P><STRONG><a name="[82]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
-
-<P><STRONG><a name="[44]"></a>_main_scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
-<BR><BR>[Calls]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
+<P><STRONG><a name="[43]"></a>__scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter))
+<BR><BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
-<P><STRONG><a name="[46]"></a>__main_after_scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
-<BR><BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
+<P><STRONG><a name="[45]"></a>__scatterload_rt2</STRONG> (Thumb, 84 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
 </UL>
 
-<P><STRONG><a name="[83]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
+<P><STRONG><a name="[91]"></a>__scatterload_rt2_thumb_only</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
-<P><STRONG><a name="[84]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
+<P><STRONG><a name="[92]"></a>__scatterload_loop</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
-<P><STRONG><a name="[85]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
+<P><STRONG><a name="[46]"></a>__scatterload_copy</STRONG> (Thumb, 26 bytes, Stack size unknown bytes, __scatter_copy.o(!!handler_copy), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
+</UL>
+<BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
+</UL>
 
-<P><STRONG><a name="[86]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
+<P><STRONG><a name="[93]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, __scatter.o(!!handler_null), UNUSED)
 
-<P><STRONG><a name="[87]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
+<P><STRONG><a name="[94]"></a>__scatterload_zeroinit</STRONG> (Thumb, 28 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
+
+<P><STRONG><a name="[4a]"></a>__rt_lib_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit.o(.ARM.Collect$$libinit$$00000000))
+<BR><BR>[Called By]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_li
+</UL>
+
+<P><STRONG><a name="[95]"></a>__rt_lib_init_alloca_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000030))
+
+<P><STRONG><a name="[96]"></a>__rt_lib_init_argv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000002E))
+
+<P><STRONG><a name="[97]"></a>__rt_lib_init_atexit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001D))
+
+<P><STRONG><a name="[98]"></a>__rt_lib_init_clock_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000023))
+
+<P><STRONG><a name="[99]"></a>__rt_lib_init_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000034))
+
+<P><STRONG><a name="[9a]"></a>__rt_lib_init_exceptions_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000032))
+
+<P><STRONG><a name="[9b]"></a>__rt_lib_init_fp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000002))
+
+<P><STRONG><a name="[9c]"></a>__rt_lib_init_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000021))
+
+<P><STRONG><a name="[9d]"></a>__rt_lib_init_getenv_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000025))
+
+<P><STRONG><a name="[9e]"></a>__rt_lib_init_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000C))
+
+<P><STRONG><a name="[9f]"></a>__rt_lib_init_lc_collate_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000013))
+
+<P><STRONG><a name="[a0]"></a>__rt_lib_init_lc_ctype_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000015))
+
+<P><STRONG><a name="[a1]"></a>__rt_lib_init_lc_monetary_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000017))
+
+<P><STRONG><a name="[a2]"></a>__rt_lib_init_lc_numeric_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000019))
+
+<P><STRONG><a name="[a3]"></a>__rt_lib_init_lc_time_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001B))
+
+<P><STRONG><a name="[a4]"></a>__rt_lib_init_preinit_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000006))
+
+<P><STRONG><a name="[a5]"></a>__rt_lib_init_rand_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000010))
+
+<P><STRONG><a name="[a6]"></a>__rt_lib_init_relocate_pie_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000004))
+
+<P><STRONG><a name="[a7]"></a>__rt_lib_init_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000035))
+
+<P><STRONG><a name="[a8]"></a>__rt_lib_init_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000001F))
+
+<P><STRONG><a name="[a9]"></a>__rt_lib_init_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$00000027))
+
+<P><STRONG><a name="[aa]"></a>__rt_lib_init_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libinit2.o(.ARM.Collect$$libinit$$0000000E))
+
+<P><STRONG><a name="[4f]"></a>__rt_lib_shutdown</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown.o(.ARM.Collect$$libshutdown$$00000000))
+<BR><BR>[Called By]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_ls
+</UL>
+
+<P><STRONG><a name="[ab]"></a>__rt_lib_shutdown_cpp_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000002))
+
+<P><STRONG><a name="[ac]"></a>__rt_lib_shutdown_fp_trap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000007))
+
+<P><STRONG><a name="[ad]"></a>__rt_lib_shutdown_heap_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000F))
+
+<P><STRONG><a name="[ae]"></a>__rt_lib_shutdown_return</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000010))
+
+<P><STRONG><a name="[af]"></a>__rt_lib_shutdown_signal_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000A))
+
+<P><STRONG><a name="[b0]"></a>__rt_lib_shutdown_stdio_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$00000004))
+
+<P><STRONG><a name="[b1]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000C))
+
+<P><STRONG><a name="[44]"></a>__rt_entry</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry.o(.ARM.Collect$$rtentry$$00000000))
+<BR><BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
+</UL>
+
+<P><STRONG><a name="[b2]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000002))
+
+<P><STRONG><a name="[47]"></a>__rt_entry_sh</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry4.o(.ARM.Collect$$rtentry$$00000004))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_sh &rArr; __user_setup_stackheap
+</UL>
+<BR>[Calls]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
+</UL>
+
+<P><STRONG><a name="[49]"></a>__rt_entry_li</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000A))
+<BR><BR>[Calls]<UL><LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init
+</UL>
+
+<P><STRONG><a name="[b3]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
+
+<P><STRONG><a name="[4b]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
+<BR><BR>[Stack]<UL><LI>Max Depth = 92 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; wk_usart1_init &rArr; usart_init &rArr; crm_clocks_freq_get
+</UL>
+<BR>[Calls]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[b4]"></a>__rt_entry_postli_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000C))
+
+<P><STRONG><a name="[54]"></a>__rt_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit.o(.ARM.Collect$$rtexit$$00000000))
+<BR><BR>[Called By]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
+</UL>
+
+<P><STRONG><a name="[4e]"></a>__rt_exit_ls</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000003))
+<BR><BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown
+</UL>
+
+<P><STRONG><a name="[b5]"></a>__rt_exit_prels_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000002))
+
+<P><STRONG><a name="[50]"></a>__rt_exit_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtexit2.o(.ARM.Collect$$rtexit$$00000004))
+<BR><BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
+</UL>
 
 <P><STRONG><a name="[0]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_at32f415.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_at32f415.o(RESET)
@@ -286,13 +407,52 @@ Global Symbols
 <P><STRONG><a name="[a]"></a>WWDT_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_at32f415.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_at32f415.o(RESET)
 </UL>
-<P><STRONG><a name="[45]"></a>__scatterload</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, init.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main_after_scatterload
-</UL>
-<BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_main_scatterload
+<P><STRONG><a name="[53]"></a>__user_initial_stackheap</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup_at32f415.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[88]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+<P><STRONG><a name="[b6]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+
+<P><STRONG><a name="[b7]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+
+<P><STRONG><a name="[b8]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+
+<P><STRONG><a name="[48]"></a>__user_setup_stackheap</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, sys_stackheap_outer.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
+<LI>Call Chain = __user_setup_stackheap
+</UL>
+<BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_perproc_libspace
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_initial_stackheap
+</UL>
+<BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_sh
+</UL>
+
+<P><STRONG><a name="[4d]"></a>exit</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, exit.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
+<LI>Call Chain = exit
+</UL>
+<BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit
+</UL>
+<BR>[Called By]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
+</UL>
+
+<P><STRONG><a name="[b9]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+
+<P><STRONG><a name="[52]"></a>__user_perproc_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
+</UL>
+
+<P><STRONG><a name="[ba]"></a>__user_perthread_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+
+<P><STRONG><a name="[51]"></a>_sys_exit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, sys_exit.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
+</UL>
+
+<P><STRONG><a name="[bb]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+
+<P><STRONG><a name="[bc]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+
+<P><STRONG><a name="[bd]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
 <P><STRONG><a name="[4]"></a>BusFault_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, at32f415_int.o(.text.BusFault_Handler))
 <BR><BR>[Calls]<UL><LI><a href="#[4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BusFault_Handler
@@ -328,25 +488,25 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_at32f415.o(RESET)
 </UL>
 <P><STRONG><a name="[9]"></a>SysTick_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, at32f415_int.o(.text.SysTick_Handler))
-<BR><BR>[Calls]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_timebase_handler
+<BR><BR>[Calls]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_timebase_handler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_at32f415.o(RESET)
 </UL>
-<P><STRONG><a name="[42]"></a>SystemInit</STRONG> (Thumb, 124 bytes, Stack size 0 bytes, system_at32f415.o(.text.SystemInit))
+<P><STRONG><a name="[41]"></a>SystemInit</STRONG> (Thumb, 124 bytes, Stack size 0 bytes, system_at32f415.o(.text.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_at32f415.o(.text)
 </UL>
 <P><STRONG><a name="[2f]"></a>USART1_IRQHandler</STRONG> (Thumb, 428 bytes, Stack size 16 bytes, at32f415_int.o(.text.USART1_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = USART1_IRQHandler &rArr; flash_2kb_write
 </UL>
-<BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
-<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copy_uint8_array
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
-<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_block_calculate
-<LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_data_receive
-<LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_interrupt_flag_get
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
+<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;copy_uint8_array
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_block_calculate
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_data_receive
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_interrupt_flag_get
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_at32f415.o(RESET)
 </UL>
@@ -357,390 +517,397 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_at32f415.o(RESET)
 </UL>
-<P><STRONG><a name="[51]"></a>app_load</STRONG> (Thumb, 320 bytes, Stack size 24 bytes, iap.o(.text.app_load))
+<P><STRONG><a name="[5f]"></a>app_load</STRONG> (Thumb, 320 bytes, Stack size 24 bytes, iap.o(.text.app_load))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = app_load
 </UL>
-<BR>[Calls]<UL><LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nvic_irq_disable
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_periph_clock_enable
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nvic_irq_disable
+<LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_periph_clock_enable
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[4e]"></a>copy_uint8_array</STRONG> (Thumb, 126 bytes, Stack size 8 bytes, at32f415_int.o(.text.copy_uint8_array))
+<P><STRONG><a name="[5c]"></a>copy_uint8_array</STRONG> (Thumb, 126 bytes, Stack size 8 bytes, at32f415_int.o(.text.copy_uint8_array))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = copy_uint8_array
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[4a]"></a>crc_block_calculate</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_block_calculate))
-<BR><BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
+<P><STRONG><a name="[58]"></a>crc_block_calculate</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_block_calculate))
+<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
 <LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
 </UL>
 
-<P><STRONG><a name="[4b]"></a>crc_data_reset</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_data_reset))
-<BR><BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
+<P><STRONG><a name="[59]"></a>crc_data_reset</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_data_reset))
+<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
 <LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
 </UL>
 
-<P><STRONG><a name="[68]"></a>crc_init_data_set</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_init_data_set))
-<BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
+<P><STRONG><a name="[77]"></a>crc_init_data_set</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_init_data_set))
+<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
 </UL>
 
-<P><STRONG><a name="[69]"></a>crc_poly_size_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_poly_size_set))
-<BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
+<P><STRONG><a name="[78]"></a>crc_poly_size_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_poly_size_set))
+<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
 </UL>
 
-<P><STRONG><a name="[6a]"></a>crc_poly_value_set</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_poly_value_set))
-<BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
+<P><STRONG><a name="[79]"></a>crc_poly_value_set</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_poly_value_set))
+<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
 </UL>
 
-<P><STRONG><a name="[6b]"></a>crc_reverse_input_data_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_reverse_input_data_set))
-<BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
+<P><STRONG><a name="[7a]"></a>crc_reverse_input_data_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_reverse_input_data_set))
+<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
 </UL>
 
-<P><STRONG><a name="[6c]"></a>crc_reverse_output_data_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_reverse_output_data_set))
-<BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
+<P><STRONG><a name="[7b]"></a>crc_reverse_output_data_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crc.o(.text.crc_reverse_output_data_set))
+<BR><BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
 </UL>
 
-<P><STRONG><a name="[74]"></a>crm_ahb_div_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_ahb_div_set))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[85]"></a>crm_ahb_div_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_ahb_div_set))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[76]"></a>crm_apb1_div_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_apb1_div_set))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[87]"></a>crm_apb1_div_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_apb1_div_set))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[75]"></a>crm_apb2_div_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_apb2_div_set))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[86]"></a>crm_apb2_div_set</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_apb2_div_set))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[77]"></a>crm_auto_step_mode_enable</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_auto_step_mode_enable))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[88]"></a>crm_auto_step_mode_enable</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_auto_step_mode_enable))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[70]"></a>crm_clock_source_enable</STRONG> (Thumb, 122 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_clock_source_enable))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[81]"></a>crm_clock_source_enable</STRONG> (Thumb, 122 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_clock_source_enable))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[67]"></a>crm_clocks_freq_get</STRONG> (Thumb, 260 bytes, Stack size 20 bytes, at32f415_crm.o(.text.crm_clocks_freq_get))
+<P><STRONG><a name="[76]"></a>crm_clocks_freq_get</STRONG> (Thumb, 260 bytes, Stack size 20 bytes, at32f415_crm.o(.text.crm_clocks_freq_get))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = crm_clocks_freq_get
 </UL>
-<BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_timebase_init
+<BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_timebase_init
 </UL>
 
-<P><STRONG><a name="[71]"></a>crm_flag_get</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_flag_get))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[82]"></a>crm_flag_get</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_flag_get))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[72]"></a>crm_hext_stable_wait</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_hext_stable_wait))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[83]"></a>crm_hext_stable_wait</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_hext_stable_wait))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[52]"></a>crm_periph_clock_enable</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_periph_clock_enable))
-<BR><BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_load
-<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_periph_clock_config
+<P><STRONG><a name="[60]"></a>crm_periph_clock_enable</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_periph_clock_enable))
+<BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_load
+<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_periph_clock_config
 </UL>
 
-<P><STRONG><a name="[73]"></a>crm_pll_config</STRONG> (Thumb, 90 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_pll_config))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[84]"></a>crm_pll_config</STRONG> (Thumb, 90 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_pll_config))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[61]"></a>crm_reset</STRONG> (Thumb, 78 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_reset))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
-<LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[70]"></a>crm_reset</STRONG> (Thumb, 78 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_reset))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[78]"></a>crm_sysclk_switch</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_sysclk_switch))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[89]"></a>crm_sysclk_switch</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_sysclk_switch))
+<BR><BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[63]"></a>crm_sysclk_switch_status_get</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_sysclk_switch_status_get))
-<BR><BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_core_clock_update
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<P><STRONG><a name="[72]"></a>crm_sysclk_switch_status_get</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, at32f415_crm.o(.text.crm_sysclk_switch_status_get))
+<BR><BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_core_clock_update
+<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[4f]"></a>flash_2kb_write</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, flash.o(.text.flash_2kb_write))
+<P><STRONG><a name="[5d]"></a>flash_2kb_write</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, flash.o(.text.flash_2kb_write))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = flash_2kb_write
 </UL>
-<BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_lock
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_halfword_program
-<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_sector_erase
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_unlock
+<BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_lock
+<LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_halfword_program
+<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_sector_erase
+<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_unlock
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[57]"></a>flash_halfword_program</STRONG> (Thumb, 122 bytes, Stack size 0 bytes, at32f415_flash.o(.text.flash_halfword_program))
-<BR><BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
+<P><STRONG><a name="[65]"></a>flash_halfword_program</STRONG> (Thumb, 122 bytes, Stack size 0 bytes, at32f415_flash.o(.text.flash_halfword_program))
+<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
 </UL>
 
-<P><STRONG><a name="[58]"></a>flash_lock</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_flash.o(.text.flash_lock))
-<BR><BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
+<P><STRONG><a name="[66]"></a>flash_lock</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_flash.o(.text.flash_lock))
+<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
 </UL>
 
-<P><STRONG><a name="[56]"></a>flash_sector_erase</STRONG> (Thumb, 130 bytes, Stack size 0 bytes, at32f415_flash.o(.text.flash_sector_erase))
-<BR><BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
+<P><STRONG><a name="[64]"></a>flash_sector_erase</STRONG> (Thumb, 130 bytes, Stack size 0 bytes, at32f415_flash.o(.text.flash_sector_erase))
+<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
 </UL>
 
-<P><STRONG><a name="[55]"></a>flash_unlock</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, at32f415_flash.o(.text.flash_unlock))
-<BR><BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
+<P><STRONG><a name="[63]"></a>flash_unlock</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, at32f415_flash.o(.text.flash_unlock))
+<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_2kb_write
 </UL>
 
-<P><STRONG><a name="[60]"></a>flash_upgrade_flag_read</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, flash.o(.text.flash_upgrade_flag_read))
-<BR><BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[6f]"></a>flash_upgrade_flag_read</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, flash.o(.text.flash_upgrade_flag_read))
+<BR><BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7a]"></a>gpio_default_para_init</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_gpio.o(.text.gpio_default_para_init))
-<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<P><STRONG><a name="[7d]"></a>gpio_default_para_init</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_gpio.o(.text.gpio_default_para_init))
+<BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_gpio_config
 </UL>
 
-<P><STRONG><a name="[7b]"></a>gpio_init</STRONG> (Thumb, 190 bytes, Stack size 16 bytes, at32f415_gpio.o(.text.gpio_init))
+<P><STRONG><a name="[7e]"></a>gpio_init</STRONG> (Thumb, 190 bytes, Stack size 16 bytes, at32f415_gpio.o(.text.gpio_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gpio_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_gpio_config
 </UL>
 
-<P><STRONG><a name="[6d]"></a>gpio_pin_remap_config</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, at32f415_gpio.o(.text.gpio_pin_remap_config))
+<P><STRONG><a name="[7c]"></a>gpio_pin_remap_config</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, at32f415_gpio.o(.text.gpio_pin_remap_config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gpio_pin_remap_config
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_debug_config
+<BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_debug_config
 </UL>
 
-<P><STRONG><a name="[41]"></a>main</STRONG> (Thumb, 116 bytes, Stack size 0 bytes, main.o(.text.main))
+<P><STRONG><a name="[4c]"></a>main</STRONG> (Thumb, 120 bytes, Stack size 0 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = main &rArr; wk_usart1_init &rArr; usart_init &rArr; crm_clocks_freq_get
 </UL>
-<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_reset
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_load
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_upgrade_flag_read
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_timebase_init
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_nvic_config
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_debug_config
-<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_periph_clock_config
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
+<BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_reset
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_load
+<LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_upgrade_flag_read
+<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_crc_init
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_gpio_config
+<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_timebase_init
+<LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_nvic_config
+<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_debug_config
+<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_periph_clock_config
+<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
-</UL>
-<P><STRONG><a name="[53]"></a>nvic_irq_disable</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, at32f415_misc.o(.text.nvic_irq_disable))
-<BR><BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_load
+<BR>[Called By]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[6f]"></a>nvic_irq_enable</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, at32f415_misc.o(.text.nvic_irq_enable))
+<P><STRONG><a name="[61]"></a>nvic_irq_disable</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, at32f415_misc.o(.text.nvic_irq_disable))
+<BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_load
+</UL>
+
+<P><STRONG><a name="[80]"></a>nvic_irq_enable</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, at32f415_misc.o(.text.nvic_irq_enable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = nvic_irq_enable
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_nvic_config
+<BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_nvic_config
 </UL>
 
-<P><STRONG><a name="[6e]"></a>nvic_priority_group_config</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, at32f415_misc.o(.text.nvic_priority_group_config))
-<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_nvic_config
+<P><STRONG><a name="[7f]"></a>nvic_priority_group_config</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, at32f415_misc.o(.text.nvic_priority_group_config))
+<BR><BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_nvic_config
 </UL>
 
-<P><STRONG><a name="[62]"></a>system_core_clock_update</STRONG> (Thumb, 212 bytes, Stack size 16 bytes, system_at32f415.o(.text.system_core_clock_update))
+<P><STRONG><a name="[71]"></a>system_core_clock_update</STRONG> (Thumb, 212 bytes, Stack size 16 bytes, system_at32f415.o(.text.system_core_clock_update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = system_core_clock_update
 </UL>
-<BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_sysclk_switch_status_get
+<BR>[Calls]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_sysclk_switch_status_get
 </UL>
-<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
-</UL>
-
-<P><STRONG><a name="[79]"></a>systick_clock_source_config</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, at32f415_misc.o(.text.systick_clock_source_config))
-<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_timebase_init
+<BR>[Called By]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_system_clock_config
 </UL>
 
-<P><STRONG><a name="[4d]"></a>usart1_connet_pc</STRONG> (Thumb, 230 bytes, Stack size 16 bytes, at32f415_int.o(.text.usart1_connet_pc))
+<P><STRONG><a name="[8a]"></a>systick_clock_source_config</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, at32f415_misc.o(.text.systick_clock_source_config))
+<BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_timebase_init
+</UL>
+
+<P><STRONG><a name="[5b]"></a>usart1_connet_pc</STRONG> (Thumb, 238 bytes, Stack size 16 bytes, at32f415_int.o(.text.usart1_connet_pc))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = usart1_connet_pc
 </UL>
-<BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flag_get
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_data_transmit
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
-<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_block_calculate
+<BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flag_get
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_data_transmit
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_block_calculate
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[50]"></a>usart1_send_error</STRONG> (Thumb, 146 bytes, Stack size 16 bytes, at32f415_int.o(.text.usart1_send_error))
+<P><STRONG><a name="[5e]"></a>usart1_send_error</STRONG> (Thumb, 178 bytes, Stack size 16 bytes, at32f415_int.o(.text.usart1_send_error))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = usart1_send_error
 </UL>
-<BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flag_get
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_data_transmit
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
-<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_block_calculate
+<BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flag_get
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_data_transmit
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_block_calculate
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[4c]"></a>usart1_send_ok</STRONG> (Thumb, 146 bytes, Stack size 16 bytes, at32f415_int.o(.text.usart1_send_ok))
+<P><STRONG><a name="[5a]"></a>usart1_send_ok</STRONG> (Thumb, 174 bytes, Stack size 16 bytes, at32f415_int.o(.text.usart1_send_ok))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = usart1_send_ok
 </UL>
-<BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flag_get
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_data_transmit
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
-<LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_block_calculate
+<BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flag_get
+<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_data_transmit
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_block_calculate
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
-<LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[49]"></a>usart_data_receive</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_data_receive))
+<P><STRONG><a name="[57]"></a>usart_data_receive</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_data_receive))
 <BR><BR>[Called By]<UL><LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[64]"></a>usart_data_transmit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_data_transmit))
-<BR><BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
+<P><STRONG><a name="[73]"></a>usart_data_transmit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_data_transmit))
+<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
 </UL>
 
-<P><STRONG><a name="[81]"></a>usart_enable</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_enable))
-<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<P><STRONG><a name="[90]"></a>usart_enable</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_enable))
+<BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
 </UL>
 
-<P><STRONG><a name="[65]"></a>usart_flag_get</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_flag_get))
-<BR><BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
+<P><STRONG><a name="[74]"></a>usart_flag_get</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_flag_get))
+<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_error
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_connet_pc
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_send_ok
 </UL>
 
-<P><STRONG><a name="[7f]"></a>usart_hardware_flow_control_set</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_hardware_flow_control_set))
-<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<P><STRONG><a name="[8e]"></a>usart_hardware_flow_control_set</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_hardware_flow_control_set))
+<BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
 </UL>
 
-<P><STRONG><a name="[66]"></a>usart_init</STRONG> (Thumb, 134 bytes, Stack size 48 bytes, at32f415_usart.o(.text.usart_init))
+<P><STRONG><a name="[75]"></a>usart_init</STRONG> (Thumb, 134 bytes, Stack size 48 bytes, at32f415_usart.o(.text.usart_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = usart_init &rArr; crm_clocks_freq_get
 </UL>
-<BR>[Calls]<UL><LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_clocks_freq_get
+<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_clocks_freq_get
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
-</UL>
-
-<P><STRONG><a name="[80]"></a>usart_interrupt_enable</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_interrupt_enable))
-<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
 </UL>
 
-<P><STRONG><a name="[48]"></a>usart_interrupt_flag_get</STRONG> (Thumb, 194 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_interrupt_flag_get))
+<P><STRONG><a name="[8f]"></a>usart_interrupt_enable</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_interrupt_enable))
+<BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+</UL>
+
+<P><STRONG><a name="[56]"></a>usart_interrupt_flag_get</STRONG> (Thumb, 194 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_interrupt_flag_get))
 <BR><BR>[Called By]<UL><LI><a href="#[2f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[7e]"></a>usart_parity_selection_config</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_parity_selection_config))
-<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<P><STRONG><a name="[8d]"></a>usart_parity_selection_config</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_parity_selection_config))
+<BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
 </UL>
 
-<P><STRONG><a name="[7d]"></a>usart_receiver_enable</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_receiver_enable))
-<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<P><STRONG><a name="[8c]"></a>usart_receiver_enable</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_receiver_enable))
+<BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
 </UL>
 
-<P><STRONG><a name="[7c]"></a>usart_transmitter_enable</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_transmitter_enable))
-<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
+<P><STRONG><a name="[8b]"></a>usart_transmitter_enable</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, at32f415_usart.o(.text.usart_transmitter_enable))
+<BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wk_usart1_init
 </UL>
 
-<P><STRONG><a name="[5f]"></a>wk_crc_init</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, wk_crc.o(.text.wk_crc_init))
+<P><STRONG><a name="[6e]"></a>wk_crc_init</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, wk_crc.o(.text.wk_crc_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = wk_crc_init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_reverse_output_data_set
-<LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_reverse_input_data_set
-<LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_poly_value_set
-<LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_poly_size_set
-<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_init_data_set
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
+<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_reverse_output_data_set
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_reverse_input_data_set
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_poly_value_set
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_poly_size_set
+<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_init_data_set
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_data_reset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5b]"></a>wk_debug_config</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, wk_debug.o(.text.wk_debug_config))
+<P><STRONG><a name="[69]"></a>wk_debug_config</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, wk_debug.o(.text.wk_debug_config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = wk_debug_config &rArr; gpio_pin_remap_config
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_pin_remap_config
+<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_pin_remap_config
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5c]"></a>wk_nvic_config</STRONG> (Thumb, 96 bytes, Stack size 8 bytes, at32f415_wk_config.o(.text.wk_nvic_config))
+<P><STRONG><a name="[6c]"></a>wk_gpio_config</STRONG> (Thumb, 118 bytes, Stack size 32 bytes, wk_gpio.o(.text.wk_gpio_config))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = wk_gpio_config &rArr; gpio_init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_init
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_default_para_init
+</UL>
+<BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[6a]"></a>wk_nvic_config</STRONG> (Thumb, 96 bytes, Stack size 8 bytes, at32f415_wk_config.o(.text.wk_nvic_config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = wk_nvic_config &rArr; nvic_irq_enable
 </UL>
-<BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nvic_irq_enable
-<LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nvic_priority_group_config
+<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nvic_irq_enable
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nvic_priority_group_config
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5a]"></a>wk_periph_clock_config</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, at32f415_wk_config.o(.text.wk_periph_clock_config))
+<P><STRONG><a name="[68]"></a>wk_periph_clock_config</STRONG> (Thumb, 84 bytes, Stack size 8 bytes, at32f415_wk_config.o(.text.wk_periph_clock_config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = wk_periph_clock_config
 </UL>
-<BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_periph_clock_enable
+<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_periph_clock_enable
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[59]"></a>wk_system_clock_config</STRONG> (Thumb, 158 bytes, Stack size 8 bytes, at32f415_wk_config.o(.text.wk_system_clock_config))
+<P><STRONG><a name="[67]"></a>wk_system_clock_config</STRONG> (Thumb, 158 bytes, Stack size 8 bytes, at32f415_wk_config.o(.text.wk_system_clock_config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = wk_system_clock_config &rArr; system_core_clock_update
 </UL>
-<BR>[Calls]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_core_clock_update
-<LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_sysclk_switch_status_get
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_sysclk_switch
-<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_auto_step_mode_enable
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_apb1_div_set
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_apb2_div_set
-<LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_ahb_div_set
-<LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_pll_config
-<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_hext_stable_wait
-<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_flag_get
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_clock_source_enable
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_reset
+<BR>[Calls]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_core_clock_update
+<LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_sysclk_switch_status_get
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_sysclk_switch
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_auto_step_mode_enable
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_apb1_div_set
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_apb2_div_set
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_ahb_div_set
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_pll_config
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_hext_stable_wait
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_flag_get
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_clock_source_enable
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_reset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[47]"></a>wk_timebase_handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, wk_system.o(.text.wk_timebase_handler))
+<P><STRONG><a name="[55]"></a>wk_timebase_handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, wk_system.o(.text.wk_timebase_handler))
 <BR><BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
 
-<P><STRONG><a name="[89]"></a>wk_timebase_increase</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, wk_system.o(.text.wk_timebase_increase), UNUSED)
+<P><STRONG><a name="[be]"></a>wk_timebase_increase</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, wk_system.o(.text.wk_timebase_increase), UNUSED)
 
-<P><STRONG><a name="[5d]"></a>wk_timebase_init</STRONG> (Thumb, 64 bytes, Stack size 40 bytes, wk_system.o(.text.wk_timebase_init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = wk_timebase_init &rArr; crm_clocks_freq_get
+<P><STRONG><a name="[6b]"></a>wk_timebase_init</STRONG> (Thumb, 64 bytes, Stack size 32 bytes, wk_system.o(.text.wk_timebase_init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = wk_timebase_init &rArr; crm_clocks_freq_get
 </UL>
-<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;systick_clock_source_config
-<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_clocks_freq_get
+<BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;systick_clock_source_config
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crm_clocks_freq_get
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5e]"></a>wk_usart1_init</STRONG> (Thumb, 144 bytes, Stack size 24 bytes, wk_usart.o(.text.wk_usart1_init))
+<P><STRONG><a name="[6d]"></a>wk_usart1_init</STRONG> (Thumb, 144 bytes, Stack size 24 bytes, wk_usart.o(.text.wk_usart1_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = wk_usart1_init &rArr; usart_init &rArr; crm_clocks_freq_get
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_enable
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_interrupt_enable
-<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_hardware_flow_control_set
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_parity_selection_config
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_receiver_enable
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_transmitter_enable
-<LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_init
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_default_para_init
+<BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_enable
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_interrupt_enable
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_hardware_flow_control_set
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_parity_selection_config
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_receiver_enable
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_transmitter_enable
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_init
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_default_para_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
-
-<P><STRONG><a name="[8a]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
-
-<P><STRONG><a name="[8b]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
-
-<P><STRONG><a name="[8c]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 <P>
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[54]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, iap.o(.text.__NVIC_ClearPendingIRQ))
-<BR><BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_load
+<P><STRONG><a name="[62]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, iap.o(.text.__NVIC_ClearPendingIRQ))
+<BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_load
 </UL>
 <P>
 <H3>

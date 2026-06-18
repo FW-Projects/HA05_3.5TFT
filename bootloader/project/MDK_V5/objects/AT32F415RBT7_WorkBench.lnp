@@ -8,6 +8,7 @@
 ".\objects\wk_usart.o"
 ".\objects\iap.o"
 ".\objects\flash.o"
+".\objects\wk_gpio.o"
 ".\objects\at32f415_crc.o"
 ".\objects\at32f415_crm.o"
 ".\objects\at32f415_debug.o"
@@ -18,7 +19,7 @@
 ".\objects\at32f415_usart.o"
 ".\objects\system_at32f415.o"
 ".\objects\startup_at32f415.o"
---library_type=microlib --strict --scatter ".\objects\AT32F415RBT7_WorkBench.sct"
+--strict --scatter ".\objects\AT32F415RBT7_WorkBench.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\listings\AT32F415RBT7_WorkBench.map" -o .\objects\AT32F415RBT7_WorkBench.axf

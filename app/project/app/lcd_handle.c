@@ -824,18 +824,43 @@ void show_curve(HA01_Handle *this)
                                : sFWHA01_t.system_parameter.actual_temp;
 		if(display_temp < sFWHA01_t.system_parameter.cpu_temp)
 			display_temp = sFWHA01_t.system_parameter.cpu_temp;
-		if(this->Work_handle_state == HANDLE_SLEEP || this->system_parameter.actual_air < 30)
+		
+		if(this->handle_position == IN_POSSITION)
 		{
-			display_air = this->system_parameter.actual_air;
+			if(this->sleep_state == SLEEP_CLOSE)
+			{
+				display_air = this->system_parameter.air_data;
+			}
+			else
+			{
+				display_air = this->system_parameter.sleep_air_data;
+			}
 		}
 		else
 		{
-			if(sFWHA01_t.run_mode == Cold_Mode)
-				display_air = this->system_parameter.cold_mode_set_air;
-			else
-				display_air = this->system_parameter.air_data;
-			
+			display_air = this->system_parameter.air_data;
 		}
+		
+		if(this->Work_handle_state == HANDLE_SLEEP || this->system_parameter.actual_air < 30)
+		{
+			display_air = 0;
+		}
+		else if(sFWHA01_t.run_mode == Cold_Mode)
+		{
+			display_air = this->system_parameter.cold_mode_set_air;
+		}
+//		if(this->Work_handle_state == HANDLE_SLEEP || this->system_parameter.actual_air < 30)
+//		{
+//			display_air = this->system_parameter.actual_air;
+//		}
+//		else
+//		{
+//			if(sFWHA01_t.run_mode == Cold_Mode)
+//				display_air = this->system_parameter.cold_mode_set_air;
+//			else
+//				display_air = this->system_parameter.air_data;
+//			
+//		}
 
         LCD_Show_Curve(18, 40, 376, 250, display_temp, display_air,
                        this->system_parameter.temp_buff, this->system_parameter.air_buff);

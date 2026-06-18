@@ -47,7 +47,7 @@ I (..\system\PID_operation.h)(0x69FA0CCA)
 I (..\app\ec11_handle.h)(0x6A0565D9)
 I (..\device\EncoderEC11.h)(0x6A043F59)
 I (..\device\adc_filter.h)(0x6A1FD845)
-I (..\app\PC_comm_handle.h)(0x6A336512)
+I (..\app\PC_comm_handle.h)(0x6A33C1BE)
 I (..\device\at32_Usart.h)(0x6A082CE1)
 I (..\app\iap.h)(0x6A082675)
 F (..\src\at32f415_wk_config.c)(0x6A238654)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -flto -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../libraries/drivers/inc -I ../../libraries/cmsis/cm4/core_support -I ../../libraries/cmsis/cm4/device_support -I ../inc -I ../app -I ../device -I ../src -I ../system -I ../TFT2.8 -Wno-invalid-source-encoding-ID:/keil5.42/ArteryTek/AT32F415_DFP/2.1.6/Device/Include-D__UVISION_VERSION="542" -DAT32F415RBT7 -DAT32F415RBT7 -DUSE_STDPERIPH_DRIVER-o ./objects/at32f415_wk_config.o -MMD)
@@ -692,7 +692,7 @@ I (..\system\PID_operation.h)(0x69FA0CCA)
 I (..\app\HA01_handle.h)(0x6A3364F2)
 I (..\app\beep_handle.h)(0x6A02F23C)
 I (..\device\beep.h)(0x69FA0CCA)
-F (..\app\output_handle.c)(0x6A292811)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -flto -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../libraries/drivers/inc -I ../../libraries/cmsis/cm4/core_support -I ../../libraries/cmsis/cm4/device_support -I ../inc -I ../app -I ../device -I ../src -I ../system -I ../TFT2.8 -Wno-invalid-source-encoding-ID:/keil5.42/ArteryTek/AT32F415_DFP/2.1.6/Device/Include-D__UVISION_VERSION="542" -DAT32F415RBT7 -DAT32F415RBT7 -DUSE_STDPERIPH_DRIVER-o ./objects/output_handle.o -MMD)
+F (..\app\output_handle.c)(0x6A33BA49)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -flto -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../libraries/drivers/inc -I ../../libraries/cmsis/cm4/core_support -I ../../libraries/cmsis/cm4/device_support -I ../inc -I ../app -I ../device -I ../src -I ../system -I ../TFT2.8 -Wno-invalid-source-encoding-ID:/keil5.42/ArteryTek/AT32F415_DFP/2.1.6/Device/Include-D__UVISION_VERSION="542" -DAT32F415RBT7 -DAT32F415RBT7 -DUSE_STDPERIPH_DRIVER-o ./objects/output_handle.o -MMD)
 I (..\app\output_handle.h)(0x69FA0CCA)
 I (..\app\HA01_handle.h)(0x6A3364F2)
 I (..\..\libraries\cmsis\cm4\device_support\at32f415.h)(0x69FA0CCA)
@@ -723,7 +723,7 @@ I (..\app\lcd_handle.h)(0x6A180420)
 I (..\device\lcd.h)(0x6A190F0A)
 I (..\inc\at32f415_wk_config.h)(0x6A238654)
 F (..\app\PC_comm_handle.c)(0x6A33656E)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -flto -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../libraries/drivers/inc -I ../../libraries/cmsis/cm4/core_support -I ../../libraries/cmsis/cm4/device_support -I ../inc -I ../app -I ../device -I ../src -I ../system -I ../TFT2.8 -Wno-invalid-source-encoding-ID:/keil5.42/ArteryTek/AT32F415_DFP/2.1.6/Device/Include-D__UVISION_VERSION="542" -DAT32F415RBT7 -DAT32F415RBT7 -DUSE_STDPERIPH_DRIVER-o ./objects/pc_comm_handle.o -MMD)
-I (..\app\PC_comm_handle.h)(0x6A336512)
+I (..\app\PC_comm_handle.h)(0x6A33C1BE)
 I (..\..\libraries\cmsis\cm4\device_support\at32f415.h)(0x69FA0CCA)
 I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x69FA0CCA)
 I (..\..\libraries\cmsis\cm4\device_support\system_at32f415.h)(0x69FA0CCA)
@@ -751,7 +751,7 @@ I (..\device\lcd.h)(0x6A190F0A)
 I (..\inc\at32f415_wk_config.h)(0x6A238654)
 I (..\device\at32_spiflash.h)(0x6A238D47)
 I (..\inc\wk_system.h)(0x6A238654)
-F (..\app\lcd_handle.c)(0x6A336891)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -flto -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../libraries/drivers/inc -I ../../libraries/cmsis/cm4/core_support -I ../../libraries/cmsis/cm4/device_support -I ../inc -I ../app -I ../device -I ../src -I ../system -I ../TFT2.8 -Wno-invalid-source-encoding-ID:/keil5.42/ArteryTek/AT32F415_DFP/2.1.6/Device/Include-D__UVISION_VERSION="542" -DAT32F415RBT7 -DAT32F415RBT7 -DUSE_STDPERIPH_DRIVER-o ./objects/lcd_handle.o -MMD)
+F (..\app\lcd_handle.c)(0x6A33BA80)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -flto -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../../libraries/drivers/inc -I ../../libraries/cmsis/cm4/core_support -I ../../libraries/cmsis/cm4/device_support -I ../inc -I ../app -I ../device -I ../src -I ../system -I ../TFT2.8 -Wno-invalid-source-encoding-ID:/keil5.42/ArteryTek/AT32F415_DFP/2.1.6/Device/Include-D__UVISION_VERSION="542" -DAT32F415RBT7 -DAT32F415RBT7 -DUSE_STDPERIPH_DRIVER-o ./objects/lcd_handle.o -MMD)
 I (..\app\lcd_handle.h)(0x6A180420)
 I (..\device\lcd.h)(0x6A190F0A)
 I (..\inc\at32f415_wk_config.h)(0x6A238654)
