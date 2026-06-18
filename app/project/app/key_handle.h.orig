@@ -1,0 +1,22 @@
+#ifndef _KEY_HANDLE_H
+#define _KEY_HANDLE_H
+#include "key.h"
+#include "lcd_handle.h"
+#define KEY_HANDLE_TIME          15
+#define HEL_TIME                 200
+
+typedef enum
+{
+	TEMP_ADD_EVENT = 0,
+	TEMP_ADD_FIVE_EVENT,
+	TEMP_REDUCE_EVENT,
+	TEMP_REDUCE_FIVE_EVENT,
+	WIND_ADD_EVENT,
+	WIND_ADD_FIVE_EVENT,
+	WIND_REDUCE_EVENT,
+WIND_REDUCE_FIVE_EVENT,
+}handle_event;
+
+void KeyProc(void);
+void key_handle(void);
+#endif

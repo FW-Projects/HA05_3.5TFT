@@ -1,0 +1,26 @@
+#ifndef _BEEP_H
+#define _BEEP_H
+
+#include <stdio.h>
+#include "at32f415.h"
+
+/* output */
+#define BEEP_PORT             GPIOF
+#define CH1_KEY_PIN           GPIO_PINS_4
+
+
+typedef enum {
+    BEEP_OFF = 0,
+    BEEP_ON,
+} BEEP_STATUS;
+
+typedef struct
+{
+	char *name;
+ BEEP_STATUS Status;      //×´Ì¬
+ void (*ON)(void);     //´ò¿ª
+ void (*OFF)(void);    //¹Ø±Õ
+}beep_t;
+
+
+#endif

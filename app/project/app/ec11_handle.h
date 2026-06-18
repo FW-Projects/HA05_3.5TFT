@@ -1,0 +1,69 @@
+#ifndef __EC11_HANDLE_H
+#define __EC11_HANDLE_H
+#include <stdint.h>
+#include <stdbool.h>
+
+#include "EncoderEC11.h"
+
+#define EC11_TASK_TIME          1
+
+
+typedef enum
+{
+	ENTER_MENU,
+	ENTER_SETS,
+	PAGE_ADD,
+	PAGE_REDUCE,
+	EXIT_MENU,
+	
+	TEMP_ADD,
+    TEMP_REDUCE,
+	
+	TEMP_ADD_FIVE,
+    TEMP_REDUCE_FIVE,
+	
+	SET_RUN_MODE,
+	SET_TEMP_UNIT,
+
+	SET_TEMP_CAL_ADD,
+	SET_TEMP_CAL_REDUCE,
+	SET_TEMP_CAL_ADD_FIVE,
+	SET_TEMP_CAL_REDUCE_FIVE,
+
+	SET_SPEAK_MODE,
+	SET_LONGKEY_MODE,
+	SET_SHORTKEY_MODE,
+	SET_KEY_TYPE_MODE,
+	SET_TEMP_LOCK,
+	SET_SLEEP_MODE,
+	
+	RESET_HA01_VALUE,
+	EC11_END_EVENT,
+
+	SET_RESET_MODE,
+}ec11_event_e;
+
+typedef enum
+{
+	AIR_ADD_FIVE,
+	AIR_ADD,
+	AIR_REDUCE,
+	AIR_REDUCE_FIVE,
+	
+	COLD_AIR_ADD_FIVE,
+	COLD_AIR_ADD,
+	COLD_AIR_REDUCE,
+	COLD_AIR_REDUCE_FIVE,
+	
+	
+	AIR_EC11_END_EVENT,
+
+}air_ec11_event_e;
+
+
+
+
+void ec11_handle(void);
+
+#endif // __ENCODER_EC11_H
+

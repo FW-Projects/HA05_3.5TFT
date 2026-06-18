@@ -1,0 +1,2268 @@
+#include "lcd_handle.h"
+#include "work_handle.h"
+
+extern const unsigned char gImage_1[];
+extern const unsigned char gImage_2[];
+extern const unsigned char gImage_3[];
+extern const unsigned char gImage_4[];
+extern const unsigned char gImage_5[];
+extern const unsigned char gImage_6[];
+extern const unsigned char gImage_7[];
+extern const unsigned char gImage_8[];
+extern const unsigned char gImage_9[];
+extern const unsigned char gImage_10[];
+extern const unsigned char gImage_11[];
+extern const unsigned char gImage_12[];
+extern const unsigned char gImage_13[];
+extern const unsigned char gImage_14[];
+extern const unsigned char gImage_15[];
+extern const unsigned char gImage_16[];
+extern const unsigned char gImage_17[];
+extern const unsigned char gImage_18[];
+extern const unsigned char gImage_19[];
+extern const unsigned char gImage_20[];
+extern const unsigned char gImage_21[];
+extern const unsigned char gImage_22[];
+/* 1:通道1    2：通道2    3：通道3    4：通道4 */
+uint8_t ch = 0;
+
+
+/********************************** 设置参数 **********************************/
+
+/* 设置时间 */
+uint16_t set_time = 0;
+uint8_t time_countdown_flag = 0;
+int16_t countdown_time = 0;
+
+/* 恢复出厂设置标志位 */
+uint8_t reset_flag = 0;
+/* 设置显示模式 */
+uint8_t display_mode;//显示华氏度或摄氏度
+/* 设置蜂鸣器模式 */
+uint8_t speak_mode;  //开启或关闭蜂鸣器     1；关闭 2：开启
+/* 设置温度锁定模式 */
+uint8_t lock_mode;   //锁定温度显示         1：锁定 2：不锁定
+/* 设置冷风模式 */
+uint8_t cold_mode;   //冷风模式             1：开启 2：关闭
+uint16_t cold_mode_set_wind;   //冷风模式下输出的风量
+/* 显示通道数值标志位 */
+uint8_t show_ch_value_flag;
+/* 刷新设置温度标志位 */
+uint8_t refresh_set_wind_flag;
+/* 显示保存成功标志位 */
+uint8_t save_ch_flag = 0;
+/* 显示实际温度 */
+uint16_t actual_temp = 0;
+uint16_t actual_temp_float = 0;
+/* 显示设置温度（摄氏度） */
+uint16_t set_temp;
+/* 显示设置风量 */
+uint16_t set_wind;
+/* 显示校准温度值 */
+int16_t set_calibration_temp;
+/* 显示校准温度值（华氏度） */
+int16_t external_temp_f;
+/* 显示校准温度值 */
+uint8_t set_calibration_temp_flag;
+/* 外部温度值 */
+int16_t external_temp;
+/* 显示设置温度（华氏度） */
+uint16_t set_temp_f;
+/* 设置时间标志位 */
+uint8_t set_time_flag;
+/* 设置温度标志位 */
+uint8_t set_temp_flag;
+/* 通道1的设置参数 */
+uint16_t set_temp_ch1;
+uint16_t set_wind_ch1;
+uint16_t set_time_ch1;
+/* 通道2的设置参数 */
+uint16_t set_temp_ch2;
+uint16_t set_wind_ch2;
+uint16_t set_time_ch2;
+/* 通道3的设置参数 */
+uint16_t set_temp_ch3;
+uint16_t set_wind_ch3;
+uint16_t set_time_ch3;
+/* 通道4的设置参数 */
+uint16_t set_temp_ch4;
+uint16_t set_wind_ch4;
+uint16_t set_time_ch4;
+/* 显示ON标志位 */
+uint8_t show_on_flag;
+/* 显示OFF标志位 */
+uint8_t show_off_flag;
+
+
+
+static title_t time_set =
+{
+    .x1 = 320,
+    .y1 = 180,
+    .sizey = 64,
+    .num = &set_time,
+    .fc = WHITE,
+    .bc = BLACK,
+    .len = 3,
+    .mode = 0,
+};
+
+
+static title_t temp_actual =
+{
+    .x1 = 85,
+    .y1 = 20,
+    .sizey = 128,
+    .num = (&actual_temp),
+    .fc = WHITE,
+    .bc = BLACK,
+    .len = 3,
+    .mode = 0,
+};
+
+static title_t temp_actual_float =
+{
+    .x1 = 320,
+    .y1 = 20,
+    .sizey = 128,
+    .num = &actual_temp_float,
+    .fc = WHITE,
+    .bc = BLACK,
+    .len = 1,
+    .mode = 0,
+};
+
+static title_t temp_set =
+{
+    .x1 = 85,
+    .y1 = 20,
+    .sizey = 128,
+    .num = &set_temp,
+    .fc = WHITE,
+    .bc = BLACK,
+    .len = 3,
+    .mode = 0,
+
+};
+
+static title_t wind_set =
+{
+    .x1 = 110,
+    .y1 = 180,
+    .sizey = 64,
+    .num = &set_wind,
+    .fc = WHITE,
+    .bc = BLACK,
+    .len = 3,
+    .mode = 0,
+
+};
+
+static title_t wind_pic =
+{
+    .x1 = 70,
+    .y1 = 190,
+};
+
+static title_t air1_pic =
+{
+    .x1 = 18,
+    .y1 = 190,
+};
+
+static title_t run_pic =
+{
+    .x1 = 50,
+    .y1 = 280,
+};
+
+static title_t sun_pic =
+{
+    .x1 = 115,
+    .y1 = 275,
+};
+
+static title_t adjust_pic =
+{
+    .x1 = 175,
+    .y1 = 280,
+};
+
+static title_t dot_pic =
+{
+    .x1 = 300,
+    .y1 = 120,
+};
+
+static title_t timer_pic =
+{
+    .x1 = 260,
+    .y1 = 190,
+};
+
+
+static title_t speaker_pic =
+{
+    .x1 = 265,
+    .y1 = 275,
+};
+
+
+static title_t s_pic =
+{
+    .x1 = 445,
+    .y1 = 210,
+};
+
+static title_t celsius_pic =
+{
+    .x1 = 390,
+    .y1 = 28,
+};
+
+static title_t fahrenheit_pic =
+{
+    .x1 = 390,
+    .y1 = 98,
+};
+
+static title_t ch_1_pic =
+{
+    .x1 = 15,
+    .y1 = 20,
+};
+
+static title_t ch_2_pic =
+{
+    .x1 = 15,
+    .y1 = 52,
+};
+
+static title_t ch_3_pic =
+{
+    .x1 = 15,
+    .y1 = 84,
+};
+
+static title_t ch_4_pic =
+{
+    .x1 = 15,
+    .y1 = 116,
+};
+
+static title_t sleep_pic =
+{
+
+    .x1 = 380,
+    .y1 = 280,
+};
+
+
+
+void LcdProc(void)
+{
+    /* 系统状态相关 */
+    volatile static uint16_t last_state;      //系统上次运行状态
+    static uint8_t show_sun_flag;    //运行图标显示
+    /* 设置温度显示相关 */
+    static uint8_t temp_set_flash_count;//设置温度值闪烁次数
+    static uint8_t show_temp_flag;      //显示或关闭标志位
+    static uint8_t temp_flash_flag;     //数字开始闪烁标志位
+    static uint16_t last_set_temp;      //上次设置值
+    static uint8_t show_set_temp;       //显示设置温度标志位（与实际温度显示互斥）
+    static int16_t last_set_calibration_temp;
+    /* 温度校准显示相关 */
+    static uint8_t  first_in = 0;       //第一次进入
+    static uint8_t  external_temp_flash_flag;              //数字闪烁
+    static uint8_t  external_temp_set_flash_count;         //闪烁次数
+    static uint16_t set_external_delay;                    //设置延时退出
+    static uint8_t show_external_temp_flag;
+    static uint16_t last_external_temp = 0;                //上一次温度校准值
+    /* 实际温度显示相关 */
+    static uint16_t last_actual_temp;          //实际温度值整数
+    static uint16_t last_actual_temp_float;    //实际温度值小数
+    /* 时间显示相关 */
+    static uint8_t time_flash_count = FALSE;   //数字闪烁
+    static uint8_t show_time_pic_flag;         //闹钟图标显示或关闭
+    static uint8_t show_time_flag;             //数字显示或关闭
+    static uint16_t last_set_time;             //上次设置值
+    static uint8_t show_ADJUST_flag = TRUE;    //显示ADJUST图标标志位
+    /* 风量显示相关 */
+    static uint16_t wind_flash_pic;         //图标刷新变量
+    static uint8_t show_wind_flag;          //显示或关闭标志位
+    static uint8_t wind_flash_flag;         //数字开始闪烁标志位
+    static uint16_t last_set_wind;          //上次设置值
+    static uint8_t wind_set_flash_count;    //数字闪烁次数
+    static uint8_t show_stop_wind_flag = FALSE;
+    /* 显示模式相关 */
+    static uint16_t last_display_mode;
+    /* 显示音量相关 */
+    static uint16_t last_speak_mode;
+    /* 显示通道相关 */
+    static uint16_t last_ch;
+    /* 显示ON/OFF相关 */
+    /* 全局变量相关 */
+    static uint8_t setting_flag;//正在设置参数标志位(显示通道设置值时、正在设置温度时要占用住)
+    static uint8_t refresh = FALSE;
+    static uint16_t lcd_run_time;
+    static uint8_t first_start_flag = FALSE;
+    static uint16_t set_temp_delay = 0;
+    static uint16_t set_wind_delay = 0;
+    static uint16_t set_time_delay = 0;
+    static uint8_t sleep_to_work_flag = 0;
+    static uint8_t sleep_to_stop_flag = 0;
+    static uint8_t work_to_stop_flag = 0;
+    static uint8_t stop_to_sleep_flag = 0;
+    static uint8_t stop_to_work_flag = 0;
+    lcd_run_time++;//1ms自加1
+
+    /* 第一次开机不闪烁 */
+    if (!first_start_flag)
+    {
+        static uint8_t first_in = FALSE;
+
+        if (first_in == FALSE)
+        {
+            first_in = TRUE;
+
+            if (display_mode == 1)//显示摄氏度
+            {
+                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+            }
+            else if (display_mode == 2)//显示华氏度
+            {
+                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+            }
+
+            LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                              temp_actual_float.fc, temp_actual_float.bc);
+            LCD_ShowIntNum64(wind_set.x1, wind_set.y1, *wind_set.num, wind_set.len, wind_set.fc, wind_set.bc);
+            last_set_temp = *temp_set.num;
+            last_set_wind = *wind_set.num;
+        }
+
+        if (first_in == TRUE)
+        {
+            static uint16_t first_time = FIRST_START_TIME;
+            first_time -- ;
+
+            if (!first_time)
+            {
+                first_time = FIRST_START_TIME;
+                first_start_flag = TRUE;
+                first_in = FALSE;
+            }
+        }
+    }
+
+    /* 停止模式下显示 */
+    /* 刚开机或从睡眠模式、送风模式恢复显示界面 */
+    if (swork.state == WORKING || swork.state == STOP)
+    {
+        if (last_state != swork.state)
+        {
+            if (last_state == SLEEP && swork.state == WORKING)
+            {
+                sleep_to_work_flag = 1;
+                sleep_to_stop_flag = 0;
+                work_to_stop_flag = 0;
+                stop_to_sleep_flag = 0;
+                stop_to_work_flag = 0;
+            }
+            /* 从休眠模式跳到停止模式 */
+            else if (last_state == SLEEP && swork.state == STOP)
+            {
+                sleep_to_work_flag = 0;
+                sleep_to_stop_flag = 1;
+                work_to_stop_flag = 0;
+                stop_to_sleep_flag = 0;
+                stop_to_work_flag = 0;
+
+                /* 显示设置温度 */
+                if (display_mode == 1)//显示摄氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+                else if (display_mode == 2)//显示华氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+
+                LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                  temp_actual_float.fc, temp_actual_float.bc);
+                /* 显示设置风量 */
+                LCD_ShowIntNum64(wind_set.x1, wind_set.y1, *wind_set.num, wind_set.len, wind_set.fc, wind_set.bc);
+            }
+            /* 从运行模式跳到停止模式 */
+            else if (last_state == WORKING && swork.state == STOP)
+            {
+                sleep_to_work_flag = 0;
+                sleep_to_stop_flag = 0;
+                work_to_stop_flag = 1;
+                stop_to_sleep_flag = 0;
+                stop_to_work_flag = 0;
+            }
+            /* 从停止模式跳到休眠模式 */
+            else if (last_state == STOP && swork.state == SLEEP)
+            {
+                sleep_to_work_flag = 0;
+                sleep_to_stop_flag = 0;
+                work_to_stop_flag = 0;
+                stop_to_sleep_flag = 1;
+                stop_to_work_flag = 0;
+            }
+            /* 从停止模式跳到工作模式 */
+            else if (last_state == STOP && swork.state == WORKING)
+            {
+                sleep_to_work_flag = 0;
+                sleep_to_stop_flag = 0;
+                work_to_stop_flag = 0;
+                stop_to_sleep_flag = 0;
+                stop_to_work_flag = 1;
+
+                /* 显示设置温度 */
+                if (display_mode == 1)//显示摄氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+                else if (display_mode == 2)//显示华氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+
+                LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                  temp_actual_float.fc, temp_actual_float.bc);
+                /* 显示设置风量 */
+                LCD_ShowIntNum64(wind_set.x1, wind_set.y1, *wind_set.num, wind_set.len, wind_set.fc, wind_set.bc);
+                /* 不闪烁设置 */
+                first_start_flag = FALSE;
+            }
+            /* 从冷风模式跳到工作模式 */
+            else if (last_state == COLD_MODE && swork.state == WORKING)
+            {
+                /* 显示设置温度 */
+                if (display_mode == 1)//显示摄氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+                else if (display_mode == 2)//显示华氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+
+                LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                  temp_actual_float.fc, temp_actual_float.bc);
+                /* 显示设置风量 */
+                LCD_ShowIntNum64(wind_set.x1, wind_set.y1, *wind_set.num, wind_set.len, wind_set.fc, wind_set.bc);
+            }
+
+            /* 不闪烁设置 */
+            if (sleep_to_work_flag)
+            {
+                first_start_flag = FALSE;
+            }
+
+            /* 清除睡眠图标 */
+            LCD_Fill(sleep_pic.x1, sleep_pic.y1, sleep_pic.x1 + 62, sleep_pic.y1 + 20, BLACK);
+            /* 清除设置时间区域 */
+            LCD_Fill(time_set.x1, time_set.y1, time_set.x1 + time_set.len * time_set.sizey, time_set.y1 + time_set.sizey, BLACK);
+
+            /* 显示华氏度或摄氏度图标 */
+            if (display_mode == 1)
+            {
+                LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+            }
+            else if (display_mode == 2)
+            {
+                LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+            }
+
+            /* 显示AIR1图标 */
+            LCD_ShowPicture(air1_pic.x1, air1_pic.y1, 45, 21, gImage_1);
+            /* 显示RUN图标 */
+            LCD_ShowPicture(run_pic.x1, run_pic.y1, 38, 20, gImage_2);
+            /* 显示小数点图标 */
+            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+            /* 显示闹钟图标 */
+            LCD_ShowPicture(timer_pic.x1, timer_pic.y1, 41, 56, gImage_8);
+            /* 显示S图标 */
+            LCD_ShowPicture(s_pic.x1, s_pic.y1, 28, 29, gImage_9);
+
+            /* 显示蜂鸣器图标 */
+            if (2 == speak_mode)
+            {
+                LCD_ShowPicture(speaker_pic.x1, speaker_pic.y1, 34, 32, gImage_14);
+            }
+
+            /* 显示线条 */
+            LCD_Fill(0, 170, 480, 175, WHITE);
+            LCD_Fill(0, 250, 480, 255, WHITE);
+            LCD_Fill(238, 170, 242, 250, WHITE);
+            /* 显示设置时间 */
+            LCD_ShowIntNum64(time_set.x1, time_set.y1, *time_set.num, time_set.len, time_set.fc, time_set.bc);
+            /* 更新系统状态 */
+            last_state = swork.state;
+        }
+
+        /* 显示实际温度 */
+        if ((lcd_run_time % TEMP_REFRESH_TIME == 0) &&
+                first_start_flag &&
+                !setting_flag &&
+                !sleep_to_stop_flag &&
+                !set_calibration_temp_flag) //等待计时结束/等待第一次上电结束/温度正在设置时/通道选择时/从休眠模式被唤醒时/温度校准时 不显示实际温度
+        {
+            extern uint8_t linear_cal;
+
+            if (last_actual_temp != *temp_actual.num)
+            {
+                last_actual_temp = *temp_actual.num;
+
+                if (swork.state == WORKING)
+                {
+                    if (lock_mode == 1)//锁定显示
+                    {
+                        if (display_mode == 1)//显示摄氏度
+                        {
+                            if ((actual_temp - set_calibration_temp + linear_cal) >= set_temp
+                                    && (actual_temp - set_calibration_temp + linear_cal) - set_temp <=
+                                    30) //实际温度大于设置温度(但不超过20)直接显示设置温度（锁定上限）
+                            {
+                                LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, set_temp, temp_actual.len, temp_actual.fc, temp_actual.bc);
+                            }
+                            else if ((actual_temp - set_calibration_temp + linear_cal) <= set_temp
+                                     && set_temp - (actual_temp - set_calibration_temp + linear_cal) <= 30)
+                            {
+                                LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, set_temp, temp_actual.len, temp_actual.fc, temp_actual.bc);
+                            }
+                            else
+                            {
+                                LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (*temp_actual.num) - set_calibration_temp + linear_cal,
+                                                  temp_actual.len,
+                                                  temp_actual.fc, temp_actual.bc);
+                            }
+
+                            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                        }
+                        else if (display_mode == 2)//显示华氏度
+                        {
+                            if ((actual_temp - set_calibration_temp + linear_cal) >= set_temp
+                                    && (actual_temp - set_calibration_temp + linear_cal) - set_temp <=
+                                    30) //实际温度大于设置温度(但不超过20)直接显示设置温度（锁定上限）
+                            {
+                                LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (9 * (set_temp) / 5  + 32), temp_actual.len, temp_actual.fc,
+                                                  temp_actual.bc);
+                            }
+                            else if ((actual_temp - set_calibration_temp + linear_cal) <= set_temp
+                                     && set_temp - (actual_temp - set_calibration_temp + linear_cal) <= 30)
+                            {
+                                LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (9 * (set_temp) / 5  + 32), temp_actual.len, temp_actual.fc,
+                                                  temp_actual.bc);
+                            }
+                            else
+                            {
+                                LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1,
+                                                  (9 * ((*temp_actual.num) - set_calibration_temp + linear_cal) / 5  + 32),
+                                                  temp_actual.len, temp_actual.fc,
+                                                  temp_actual.bc);
+                            }
+
+                            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                        }
+                    }
+                    else if (lock_mode == 2)//显示不锁定
+                    {
+                        if (display_mode == 1)//显示摄氏度
+                        {
+                            LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (*temp_actual.num) - set_calibration_temp + linear_cal,
+                                              temp_actual.len,
+                                              temp_actual.fc, temp_actual.bc);
+                        }
+                        else if (display_mode == 2)//显示华氏度
+                        {
+                            LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1,
+                                              (9 * ((*temp_actual.num) - set_calibration_temp + linear_cal) / 5  + 32),
+                                              temp_actual.len, temp_actual.fc,
+                                              temp_actual.bc);
+                        }
+                    }
+                }
+                else if (swork.state == STOP)
+                {
+                    if (display_mode == 1)//显示摄氏度
+                    {
+                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (*temp_actual.num), temp_actual.len,
+                                          temp_actual.fc, temp_actual.bc);
+                    }
+                    else if (display_mode == 2)//显示华氏度
+                    {
+                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (9 * ((*temp_actual.num)) / 5  + 32),
+                                          temp_actual.len, temp_actual.fc,
+                                          temp_actual.bc);
+                    }
+                }
+
+                /* 把摄氏度和华氏度图标显示回来 */
+                if (display_mode == 1)
+                {
+                    LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                }
+                else if (display_mode == 2)
+                {
+                    LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                }
+            }
+
+            /* 显示实际温度（小数） */
+
+            if (last_actual_temp_float != *temp_actual_float.num)
+            {
+                last_actual_temp_float = *temp_actual_float.num;
+
+                if (lock_mode == 1)//锁定显示
+                {
+                    if ((actual_temp - set_calibration_temp + linear_cal) >= set_temp
+                            && (actual_temp - set_calibration_temp + linear_cal) - set_temp <=
+                            30) //实际温度大于设置温度(但不超过20)直接显示设置温度（锁定上限）
+                    {
+                        LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                          temp_actual_float.fc, temp_actual_float.bc);
+                    }
+                    else if ((actual_temp - set_calibration_temp + linear_cal) <= set_temp
+                             && set_temp - (actual_temp - set_calibration_temp + linear_cal) <= 30)
+                    {
+                        LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                          temp_actual_float.fc, temp_actual_float.bc);
+                    }
+                    else//正常显示
+                    {
+                        LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, *temp_actual_float.num, temp_actual_float.len,
+                                          temp_actual_float.fc, temp_actual_float.bc);
+                    }
+                }
+                else if (lock_mode == 2)//不锁定显示
+                {
+                    LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, *temp_actual_float.num, temp_actual_float.len,
+                                      temp_actual_float.fc, temp_actual_float.bc);
+                }
+            }
+        }
+
+        /************************** 显示设置值 ********************************/
+#if 1
+        static uint16_t seting_ch_time = CH_SET_TIME;
+        static uint8_t set_ch_first_in = FALSE;
+
+        /* 通道切换时 */
+        if (last_ch != ch && !set_calibration_temp_flag)
+        {
+            if (ch == 1)
+            {
+                LCD_ShowPicture(ch_1_pic.x1, ch_1_pic.y1, 36, 32, gImage_15); //选择通道1
+            }
+            else if (ch == 2)
+            {
+                LCD_ShowPicture(ch_2_pic.x1, ch_2_pic.y1, 36, 32, gImage_16); //选择通道2
+            }
+            else if (ch == 3)
+            {
+                LCD_ShowPicture(ch_3_pic.x1, ch_3_pic.y1, 36, 32, gImage_17); //选择通道3
+            }
+            else if (ch == 4)
+            {
+                LCD_ShowPicture(ch_4_pic.x1, ch_4_pic.y1, 36, 32, gImage_18); //选择通道4
+            }
+
+            if (last_ch == 1)
+            {
+                LCD_Fill(ch_1_pic.x1, ch_1_pic.y1, ch_1_pic.x1 + 36, ch_1_pic.y1 + 32, BLACK); //取消选择通道1
+            }
+            else if (last_ch == 2)
+            {
+                LCD_Fill(ch_2_pic.x1, ch_2_pic.y1, ch_2_pic.x1 + 36, ch_2_pic.y1 + 32, BLACK); //取消选择通道2
+            }
+            else if (last_ch == 3)
+            {
+                LCD_Fill(ch_3_pic.x1, ch_3_pic.y1, ch_3_pic.x1 + 36, ch_3_pic.y1 + 32, BLACK); //取消选择通道3
+            }
+            else if (last_ch == 4)
+            {
+                LCD_Fill(ch_4_pic.x1, ch_4_pic.y1, ch_4_pic.x1 + 36, ch_4_pic.y1 + 32, BLACK); //取消选择通道4
+            }
+
+            last_ch = ch;
+            set_ch_first_in = TRUE;
+            /* 显示设置温度 */
+            setting_flag = TRUE;//占用住
+
+            if (display_mode == 1)//显示摄氏度
+            {
+                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+            }
+            else if (display_mode == 2)//显示华氏度
+            {
+                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+            }
+
+            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+            LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                              temp_actual_float.fc, temp_actual_float.bc);
+
+            /* 把摄氏度和华氏度图标显示回来 */
+            if (display_mode == 1)
+            {
+                LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+            }
+            else if (display_mode == 2)
+            {
+                LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+            }
+
+            /* 显示设置风量 */
+            LCD_ShowIntNum64(wind_set.x1, wind_set.y1, *wind_set.num, wind_set.len, wind_set.fc, wind_set.bc);
+            /* 显示设置时间 */
+            LCD_ShowIntNum64(time_set.x1, time_set.y1, *time_set.num, time_set.len, time_set.fc, time_set.bc);
+            /* 变量赋值 防止闪烁 */
+            last_set_temp = *temp_set.num;
+            last_set_wind = *wind_set.num;
+            seting_ch_time = CH_SET_TIME;
+        }
+        else
+        {
+            if (set_ch_first_in == TRUE)
+            {
+                /* 延迟退出设置 */
+                seting_ch_time -- ;
+
+                /* 释放参数 */
+                if (!seting_ch_time)
+                {
+                    /* 刷新通道图标 */
+                    //last_ch = 0;
+                    seting_ch_time = CH_SET_TIME;
+                    setting_flag = FALSE;
+                    show_ch_value_flag = FALSE;
+                    set_ch_first_in = FALSE;
+                }
+            }
+        }
+
+#endif
+        static uint8_t temp_flash = 0;
+
+        /* 正在设置时 */
+        if ((last_set_temp != *temp_set.num) &&
+                !refresh_set_wind_flag &&
+                set_calibration_temp_flag == FALSE &&
+                show_on_flag == FALSE &&
+                show_off_flag == FALSE &&
+                show_ch_value_flag == FALSE)        //本次温度和上次温度不一致时
+        {
+            static uint8_t delay_time = 0;
+            setting_flag = TRUE;//占用住
+            temp_flash = 0;
+
+            if (display_mode == 1)//显示摄氏度
+            {
+                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+            }
+            else if (display_mode == 2)//显示华氏度
+            {
+                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+            }
+
+            /* 把摄氏度和华氏度图标显示回来 */
+            if (display_mode == 1)
+            {
+                LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+            }
+            else if (display_mode == 2)
+            {
+                LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+            }
+
+            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+            LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                              temp_actual_float.fc, temp_actual_float.bc);
+
+            if (refresh_set_wind_flag)//设置温度时切换到设置风量的话停止闪烁温度数值
+            {
+                temp_flash_flag = FALSE;              //数字不闪烁
+                temp_set_flash_count = FLASH_COUNT;
+                show_set_temp = TRUE;
+
+                if (swork.state == STOP)
+                {
+                    if (display_mode == 1)//显示摄氏度
+                    {
+                        LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+                    }
+                    else if (display_mode == 2)//显示华氏度
+                    {
+                        LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                    }
+
+                    /* 把摄氏度和华氏度图标显示回来 */
+                    if (display_mode == 1)
+                    {
+                        LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                    }
+                    else if (display_mode == 2)
+                    {
+                        LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                    }
+
+                    LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                    LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                      temp_actual_float.fc, temp_actual_float.bc);
+                }
+            }
+            else
+            {
+                temp_flash_flag = TRUE;              //数字闪烁
+                temp_set_flash_count = FALSE;
+                show_set_temp = TRUE;
+            }
+
+            set_temp_delay = 0;
+            last_set_temp = *temp_set.num;
+        }
+
+#if 1
+        /* 数字开始闪烁 */
+        else
+        {
+            if (refresh_set_wind_flag)//设置温度时切换到设置风量的话停止闪烁温度数值
+            {
+                temp_flash_flag = FALSE;              //数字不闪烁
+                temp_set_flash_count = FLASH_COUNT;
+                show_set_temp = TRUE;
+
+                if (swork.state == STOP)
+                {
+                    if (display_mode == 1)//显示摄氏度
+                    {
+                        LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+                    }
+                    else if (display_mode == 2)//显示华氏度
+                    {
+                        LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                    }
+
+                    /* 把摄氏度和华氏度图标显示回来 */
+                    if (display_mode == 1)
+                    {
+                        LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                    }
+                    else if (display_mode == 2)
+                    {
+                        LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                    }
+
+                    LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                    LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                      temp_actual_float.fc, temp_actual_float.bc);
+                }
+            }
+            else
+            {
+                actual_temp_float = 0;
+                set_temp_delay ++;
+
+                if (set_temp_delay >= SET_TEMP_TIME)
+                {
+                    if (temp_flash_flag)
+                    {
+                        if (!show_temp_flag)
+                        {
+                            LCD_Fill(temp_set.x1, temp_set.y1, temp_set.x1 + temp_actual_float.x1 + 64, temp_set.y1 + temp_set.sizey,
+                                     BLACK);
+                            show_temp_flag = TRUE;
+                        }
+                        else
+                        {
+                            if (display_mode == 1)
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+                                LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                            }
+                            else if (display_mode == 2)
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                                LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                            }
+
+                            /* 小数点闪烁 */
+                            LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                              temp_actual_float.fc, temp_actual_float.bc);
+                            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                            show_temp_flag = FALSE;
+                            temp_set_flash_count++;
+                        }
+                    }
+
+                    if (temp_set_flash_count >= FLASH_COUNT)
+                    {
+                        show_set_temp = FALSE;
+                        last_actual_temp = 0;
+                        temp_set_flash_count = 0;
+                        temp_flash_flag = FALSE;
+                        setting_flag = FALSE;//释放
+
+                        if (ch == 1)
+                        {
+                            LCD_Fill(ch_1_pic.x1, ch_1_pic.y1, ch_1_pic.x1 + 36, ch_1_pic.y1 + 32, BLACK); //取消选择通道1
+                        }
+                        else if (ch == 2)
+                        {
+                            LCD_Fill(ch_2_pic.x1, ch_2_pic.y1, ch_2_pic.x1 + 36, ch_2_pic.y1 + 32, BLACK); //取消选择通道2
+                        }
+                        else if (ch == 3)
+                        {
+                            LCD_Fill(ch_3_pic.x1, ch_3_pic.y1, ch_3_pic.x1 + 36, ch_3_pic.y1 + 32, BLACK); //取消选择通道3
+                        }
+                        else if (ch == 4)
+                        {
+                            LCD_Fill(ch_4_pic.x1, ch_4_pic.y1, ch_4_pic.x1 + 36, ch_4_pic.y1 + 32, BLACK); //取消选择通道4
+                        }
+                    }
+
+                    set_temp_delay = 0;
+                }
+            }
+        }
+
+#endif
+
+        /* 温度校准时显示 */
+        if (set_calibration_temp_flag)
+        {
+            static uint16_t time_out = 3000;
+
+            /* 先把外部温度设置成当前设置温度并显示 */
+            if (first_in == 0)
+            {
+                first_in = 1;
+                //last_external_temp = external_temp;//第一次进入不闪烁
+                last_external_temp = 0;//第一次进入闪烁
+                external_temp = set_temp;
+
+                if (display_mode == 1)//显示摄氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, external_temp, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+                else if (display_mode == 2)//显示华氏度
+                {
+                    //external_temp_f = (9 * set_temp / 5 + 32);
+                    external_temp_f = set_temp_f;
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, external_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+
+                LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                  temp_actual_float.fc, temp_actual_float.bc);
+            }
+
+            /* 设置超时自动退出 */
+            time_out--;
+
+            if (!time_out)
+            {
+                /* 重置超时时间 */
+                time_out = 3000;
+                /* 校准值等于设置温度减去外部温度 */
+                set_calibration_temp += set_temp - external_temp;
+                set_calibration_temp_flag = FALSE;
+
+                /* 恢复显示实际温度(减去补偿值) */
+                if (display_mode == 1)//显示摄氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, actual_temp - set_calibration_temp, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+                else if (display_mode == 2) //显示华氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, (9 * (actual_temp - set_calibration_temp) / 5  + 32), temp_set.len,
+                                      temp_set.fc, temp_set.bc);
+                }
+
+                LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, actual_temp_float, temp_actual_float.len,
+                                  temp_actual_float.fc, temp_actual_float.bc);
+                LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);//把小数点显示回来
+            }
+
+            if (last_external_temp != external_temp) //本次外部温度值和当前外部温度值不一样时
+            {
+                /* 重置超时时间 */
+                time_out = 3000;
+                last_external_temp = external_temp;
+
+                if (display_mode == 1)//显示摄氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, external_temp, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+                else if (display_mode == 2)//显示华氏度
+                {
+                    LCD_ShowIntNum128(temp_set.x1, temp_set.y1, external_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                }
+
+                LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                  temp_actual_float.fc, temp_actual_float.bc);
+
+                /* 把摄氏度和华氏度图标显示回来 */
+                if (display_mode == 1)
+                {
+                    LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                }
+                else if (display_mode == 2)
+                {
+                    LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                }
+
+                set_external_delay  = 0;
+                external_temp_flash_flag = TRUE;              //数字闪烁
+                external_temp_set_flash_count = FALSE;
+            }
+            /* 数字开始闪烁 */
+            else
+            {
+                set_external_delay ++;
+
+                if (set_external_delay >= SET_TEMP_TIME)
+                {
+                    if (external_temp_flash_flag)
+                    {
+                        if (!show_external_temp_flag)
+                        {
+                            LCD_Fill(temp_set.x1, temp_set.y1, temp_set.x1 + temp_actual_float.x1 + 64, temp_set.y1 + temp_set.sizey,
+                                     BLACK);
+                            show_external_temp_flag = TRUE;
+                        }
+                        else
+                        {
+                            if (display_mode == 1)
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, external_temp, temp_set.len, temp_set.fc, temp_set.bc);
+                                LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                            }
+                            else if (display_mode == 2)
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, external_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                                LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                            }
+
+                            /* 小数点闪烁 */
+                            LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                              temp_actual_float.fc, temp_actual_float.bc);
+                            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                            show_external_temp_flag = FALSE;
+                            external_temp_set_flash_count++;
+
+                            if (external_temp_set_flash_count >= FLASH_COUNT)
+                            {
+                                external_temp_set_flash_count = 0;
+                                external_temp_flash_flag = FALSE;
+                                set_calibration_temp_flag = FALSE;
+                                /* 校准值等于设置温度减去外部温度 */
+                                set_calibration_temp += set_temp - external_temp;
+                                /* 重置超时时间 */
+                                time_out = 3000;
+                                first_in = 0;
+                            }
+                        }
+                    }
+
+                    set_external_delay = 0;
+                }
+            }
+        }
+        /* 提前结束温度校准时要把变量清除 把变量赋值 */
+        else if (set_calibration_temp_flag == FALSE && first_in)
+        {
+            /* 把小数点图标显示回去 */
+            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+            first_in = 0;       //第一次进入
+            external_temp_flash_flag = 0;              //数字闪烁
+            external_temp_set_flash_count = 0;         //闪烁次数
+            set_external_delay = 0;                    //设置延时退出
+            show_external_temp_flag = 0;
+            //last_external_temp = 0;                //上一次温度校准值
+            /* 校准值等于设置温度减去外部温度 */
+            set_calibration_temp += set_temp - external_temp;
+
+            /* 再把温度显示回去 */
+            /* 显示实际温度 */
+            if (lock_mode == 1)//锁定显示
+            {
+                if (display_mode == 1)//显示摄氏度
+                {
+                    if (actual_temp >= set_temp
+                            && actual_temp - set_temp <= 30) //实际温度大于设置温度(但不超过20)直接显示设置温度（锁定上限）
+                    {
+                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, set_temp, temp_actual.len, temp_actual.fc, temp_actual.bc);
+                    }
+                    else if (actual_temp <= set_temp && set_temp - actual_temp <= 30)
+                    {
+                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, set_temp, temp_actual.len, temp_actual.fc, temp_actual.bc);
+                    }
+                    else
+                    {
+                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (*temp_actual.num) - set_calibration_temp, temp_actual.len,
+                                          temp_actual.fc, temp_actual.bc);
+                    }
+
+                    LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                }
+                else if (display_mode == 2)//显示华氏度
+                {
+                    if (actual_temp - set_temp <= 3) //实际温度大于显示温度直接显示设置温度
+                    {
+                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (9 * (set_temp) / 5  + 32), temp_actual.len, temp_actual.fc,
+                                          temp_actual.bc);
+                    }
+                    else
+                    {
+                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (9 * ((*temp_actual.num) - set_calibration_temp) / 5  + 32),
+                                          temp_actual.len, temp_actual.fc,
+                                          temp_actual.bc);
+                    }
+
+                    LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                }
+            }
+            else if (lock_mode == 2)//显示不锁定
+            {
+                if (display_mode == 1)//显示摄氏度
+                {
+                    LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (*temp_actual.num) - set_calibration_temp, temp_actual.len,
+                                      temp_actual.fc, temp_actual.bc);
+                }
+                else if (display_mode == 2)//显示华氏度
+                {
+                    LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (9 * ((*temp_actual.num) - set_calibration_temp) / 5  + 32),
+                                      temp_actual.len, temp_actual.fc,
+                                      temp_actual.bc);
+                }
+            }
+        }
+
+        /* 显示设置风量 */
+
+        /* 停止模式下显示的风量 */
+        if (swork.state  == STOP && first_start_flag && !sleep_to_stop_flag && (lcd_run_time % TEMP_REFRESH_TIME == 0)
+                && !setting_flag)
+        {
+            static uint8_t set_stop_wind = 0;
+
+            if (show_stop_wind_flag == FALSE)
+            {
+                if (actual_temp >= 250)
+                {
+                    set_stop_wind = 100;
+                }
+                else if (actual_temp >= 70 && actual_temp < 250)
+                {
+                    set_stop_wind = actual_temp * 0.4;
+                }
+                else
+                {
+                    set_stop_wind = 20;
+                }
+
+                LCD_ShowIntNum64(wind_set.x1, wind_set.y1, set_stop_wind, wind_set.len, wind_set.fc, wind_set.bc);
+            }
+        }
+
+        /* 运行模式下显示的风量 */
+        if (last_set_wind != *wind_set.num && first_start_flag)
+        {
+            show_stop_wind_flag = TRUE;
+            LCD_ShowIntNum64(wind_set.x1, wind_set.y1, *wind_set.num, wind_set.len, wind_set.fc, wind_set.bc);
+            last_set_wind = *wind_set.num;
+
+            if (show_ch_value_flag) //如果是通道切换则不闪烁
+            {
+                wind_flash_flag = TRUE;
+                wind_set_flash_count = FLASH_COUNT;
+                show_wind_flag = TRUE;
+            }
+            else
+            {
+                wind_flash_flag = TRUE;
+                wind_set_flash_count = FALSE;
+                show_wind_flag = TRUE;
+            }
+        }
+        else
+        {
+            if (refresh_set_wind_flag)
+            {
+                wind_flash_flag = TRUE;
+                wind_set_flash_count = FALSE;
+                show_wind_flag = TRUE;
+                refresh_set_wind_flag = FALSE;
+                show_stop_wind_flag = FALSE;
+            }
+            else
+            {
+                set_wind_delay++;
+
+                if (set_wind_delay >= SET_WIND_TIME)
+                {
+                    if (wind_flash_flag)
+                    {
+                        if (!show_wind_flag)
+                        {
+                            LCD_Fill(wind_set.x1, wind_set.y1, wind_set.x1 + wind_set.len * (wind_set.sizey / 2) +10, wind_set.y1 + wind_set.sizey,
+                                     BLACK);
+                            show_wind_flag = TRUE;
+                        }
+                        else
+                        {
+                            LCD_ShowIntNum64(wind_set.x1, wind_set.y1, *wind_set.num, wind_set.len, wind_set.fc, wind_set.bc);
+                            show_wind_flag = FALSE;
+                            wind_set_flash_count++;
+
+                            if (wind_set_flash_count >= FLASH_COUNT)
+                            {
+                                wind_set_flash_count = FALSE;
+                                wind_flash_flag = FALSE;
+                                refresh_set_wind_flag = FALSE;
+                                show_stop_wind_flag = FALSE;
+
+                                if (ch == 1)
+                                {
+                                    LCD_Fill(ch_1_pic.x1, ch_1_pic.y1, ch_1_pic.x1 + 36, ch_1_pic.y1 + 32, BLACK); //取消选择通道1
+                                }
+                                else if (ch == 2)
+                                {
+                                    LCD_Fill(ch_2_pic.x1, ch_2_pic.y1, ch_2_pic.x1 + 36, ch_2_pic.y1 + 32, BLACK); //取消选择通道2
+                                }
+                                else if (ch == 3)
+                                {
+                                    LCD_Fill(ch_3_pic.x1, ch_3_pic.y1, ch_3_pic.x1 + 36, ch_3_pic.y1 + 32, BLACK); //取消选择通道3
+                                }
+                                else if (ch == 4)
+                                {
+                                    LCD_Fill(ch_4_pic.x1, ch_4_pic.y1, ch_4_pic.x1 + 36, ch_4_pic.y1 + 32, BLACK); //取消选择通道4
+                                }
+                            }
+                        }
+                    }
+
+                    set_wind_delay = 0;
+                }
+            }
+        }
+
+        /* 显示时间 */
+        if (time_countdown_flag)//倒计时显示
+        {
+            static uint16_t last_countdown_time;
+
+            if (last_countdown_time != countdown_time)
+            {
+                last_countdown_time = countdown_time;
+                LCD_ShowIntNum64(time_set.x1, time_set.y1, countdown_time, time_set.len, time_set.fc, time_set.bc);
+            }
+        }
+        else if (set_time_flag)//设置时间显示
+        {
+            if (last_set_time != set_time)
+            {
+                LCD_ShowIntNum64(time_set.x1, time_set.y1, *time_set.num, time_set.len, time_set.fc, time_set.bc);
+                last_set_time = set_time;
+                show_time_flag = TRUE;
+                time_flash_count = FALSE;
+            }
+            else
+            {
+                set_time_delay ++;
+
+                if (set_time_delay >= SET_TIME_TIME)
+                {
+                    if (!show_time_flag)
+                    {
+                        show_time_flag = TRUE;
+                        LCD_Fill(time_set.x1, time_set.y1, time_set.x1 + time_set.len * (time_set.sizey / 2) +10, time_set.y1 + time_set.sizey,
+                                 BLACK);
+                    }
+                    else
+                    {
+                        LCD_ShowIntNum64(time_set.x1, time_set.y1, *time_set.num, time_set.len, time_set.fc, time_set.bc);
+                        show_time_flag = FALSE;
+                        time_flash_count++;
+
+                        if (time_flash_count >= FLASH_COUNT)
+                        {
+                            time_flash_count = FALSE;
+                            set_time_flag = FALSE;
+
+                            if (ch == 1)
+                            {
+                                LCD_Fill(ch_1_pic.x1, ch_1_pic.y1, ch_1_pic.x1 + 36, ch_1_pic.y1 + 32, BLACK); //取消选择通道1
+                            }
+                            else if (ch == 2)
+                            {
+                                LCD_Fill(ch_2_pic.x1, ch_2_pic.y1, ch_2_pic.x1 + 36, ch_2_pic.y1 + 32, BLACK); //取消选择通道2
+                            }
+                            else if (ch == 3)
+                            {
+                                LCD_Fill(ch_3_pic.x1, ch_3_pic.y1, ch_3_pic.x1 + 36, ch_3_pic.y1 + 32, BLACK); //取消选择通道3
+                            }
+                            else if (ch == 4)
+                            {
+                                LCD_Fill(ch_4_pic.x1, ch_4_pic.y1, ch_4_pic.x1 + 36, ch_4_pic.y1 + 32, BLACK); //取消选择通道4
+                            }
+                        }
+                    }
+
+                    set_time_delay = 0;
+                }
+            }
+        }
+        else//静态时间显示
+        {
+            /* 如果提前退出 */
+            if (time_flash_count || set_time_delay)
+            {
+                /* 变量清除 */
+                time_flash_count = FALSE;
+                set_time_delay = 0;
+                /* 显示闹钟图标 */
+                LCD_ShowPicture(timer_pic.x1, timer_pic.y1, 41, 56, gImage_8);
+            }
+
+            if (last_set_time != *time_set.num)
+            {
+                LCD_ShowIntNum64(time_set.x1, time_set.y1, *time_set.num, time_set.len, time_set.fc, time_set.bc);
+                last_set_time = *time_set.num;
+            }
+        }
+
+        /* 显示-ON-*/
+        if (show_on_flag && !show_set_temp)  //设置温度没完成时不能显示
+        {
+            setting_flag = TRUE;    //占用住
+            static uint8_t show_on_flash = FALSE;
+            static uint16_t set_on_delay;
+            static uint8_t on_flash_count;
+            static uint8_t first_in = 0;
+
+            if (first_in == 0)
+            {
+                /* 先清除原来的显示 */
+                LCD_Fill(temp_actual.x1 - 10, temp_actual.y1, fahrenheit_pic.x1 + 38, temp_actual.y1 + 128, BLACK);
+                /* 清除4个通道的显示 */
+                LCD_Fill(ch_1_pic.x1, ch_1_pic.y1, ch_1_pic.x1 + 36, ch_1_pic.y1 + 32, BLACK); //取消选择通道1
+                LCD_Fill(ch_2_pic.x1, ch_2_pic.y1, ch_2_pic.x1 + 36, ch_2_pic.y1 + 32, BLACK); //取消选择通道2
+                LCD_Fill(ch_3_pic.x1, ch_3_pic.y1, ch_3_pic.x1 + 36, ch_3_pic.y1 + 32, BLACK); //取消选择通道3
+                LCD_Fill(ch_4_pic.x1, ch_4_pic.y1, ch_4_pic.x1 + 36, ch_4_pic.y1 + 32, BLACK); //取消选择通道3
+                first_in = 1;
+            }
+
+            set_on_delay++;
+
+            if (set_on_delay >= SET_ON_TIME)
+            {
+                if (!show_on_flash)
+                {
+                    /* 先清除原来的显示 */
+                    LCD_Fill(temp_actual.x1 - 10, temp_actual.y1, fahrenheit_pic.x1 + 38, temp_actual.y1 + 128, BLACK);
+                    on_flash_count++;
+                    show_on_flash = TRUE;
+
+                    if (on_flash_count >= FLASH_COUNT)
+                    {
+                        if (swork.state == STOP)
+                        {
+                            /* 把数字显示回去 */
+
+                            /* 显示设置温度 */
+                            if (display_mode == 1)//显示摄氏度
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+                            }
+                            else if (display_mode == 2)//显示华氏度
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                            }
+
+                            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                            LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                              temp_actual_float.fc, temp_actual_float.bc);
+
+                            /* 显示华氏度或摄氏度图标 */
+                            if (display_mode == 1)
+                            {
+                                LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                            }
+                            else if (display_mode == 2)
+                            {
+                                LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                            }
+                        }
+
+                        LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);//把小数点显示回来
+                        last_actual_temp = 0;//刷新一遍温度
+                        last_actual_temp_float = 0;
+                        show_on_flag = FALSE;
+                        on_flash_count = FALSE;
+                        setting_flag = FALSE;//释放
+                        first_in = 0;
+                    }
+                }
+                else
+                {
+                    /* 显示横杠 */
+                    LCD_ShowPicture(90, 70, 55, 23, gImage_20);
+                    /* 显示O */
+                    LCD_ShowIntNum128(155, 20, 0, 1, WHITE, BLACK);
+                    /* 显示N */
+                    TranferPicturetoTFT_LCD(229, 20, 229 + 64, 20 + 128, 2, 16384);
+                    /* 显示横杠 */
+                    LCD_ShowPicture(90 + 64 * 3 + 35, 70, 55, 23, gImage_20);
+                    show_on_flash = FALSE;
+                }
+
+                set_on_delay = 0;
+            }
+        }
+        /* 显示OFF */
+        else if (show_off_flag && !show_set_temp)//设置温度没完成时不能显示
+        {
+            setting_flag = TRUE;//占用住
+            static uint8_t show_off_flash = FALSE;
+            static uint16_t set_off_delay;
+            static uint8_t off_flash_count;
+            static uint8_t first_in = 0;
+
+            if (first_in == 0)
+            {
+                /* 先清除原来的显示 */
+                LCD_Fill(temp_actual.x1 - 10, temp_actual.y1, fahrenheit_pic.x1 + 38, temp_actual.y1 + 128, BLACK);
+                /* 清除4个通道的显示 */
+                LCD_Fill(ch_1_pic.x1, ch_1_pic.y1, ch_1_pic.x1 + 36, ch_1_pic.y1 + 32, BLACK); //取消选择通道1
+                LCD_Fill(ch_2_pic.x1, ch_2_pic.y1, ch_2_pic.x1 + 36, ch_2_pic.y1 + 32, BLACK); //取消选择通道2
+                LCD_Fill(ch_3_pic.x1, ch_3_pic.y1, ch_3_pic.x1 + 36, ch_3_pic.y1 + 32, BLACK); //取消选择通道3
+                LCD_Fill(ch_4_pic.x1, ch_4_pic.y1, ch_4_pic.x1 + 36, ch_4_pic.y1 + 32, BLACK); //取消选择通道3
+                first_in = 1;
+            }
+
+            set_off_delay++;
+
+            if (set_off_delay >= SET_0FF_TIME)
+            {
+                if (!show_off_flash)
+                {
+                    /* 先清除原来的显示 */
+                    LCD_Fill(temp_actual.x1 - 10, temp_actual.y1, fahrenheit_pic.x1 + 38, temp_actual.y1 + 128, BLACK);
+                    off_flash_count++;
+                    show_off_flash = TRUE;
+
+                    if (off_flash_count >= FLASH_COUNT)
+                    {
+                        if (swork.state == STOP)
+                        {
+                            /* 把数字显示回去 */
+                            /* 显示设置温度 */
+                            if (display_mode == 1)//显示摄氏度
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+                            }
+                            else if (display_mode == 2)//显示华氏度
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                            }
+
+                            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                            LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                              temp_actual_float.fc, temp_actual_float.bc);
+
+                            /* 显示华氏度或摄氏度图标 */
+                            if (display_mode == 1)
+                            {
+                                LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                            }
+                            else if (display_mode == 2)
+                            {
+                                LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                            }
+                        }
+
+                        first_in = 0;
+                        LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);//把小数点显示回来
+                        last_actual_temp = 0;//刷新一遍温度
+                        last_actual_temp_float = 0;
+                        show_off_flag = FALSE;
+                        off_flash_count = FALSE;
+                        setting_flag = FALSE;//释放
+                    }
+                }
+                else
+                {
+                    /* 显示O */
+                    LCD_ShowIntNum128(155, 20, 0, 1, WHITE, BLACK);
+                    
+    LCD_ShowIntNum128(155, 20, 0, 1, WHITE, BLACK);
+    /* 显示F */
+    TranferPicturetoTFT_LCD(246, 20, 246 + 64, 20 + 128, 3, 16384);
+    
+	LCD_Fill(261, 115, 261 + 45, 130, BLACK);
+	LCD_Fill(246, 130, 246 + 60, 91 + 50, BLACK);
+	
+	LCD_Fill(246,   130, 261, 140, BLACK);
+	LCD_Fill(246+2, 130-1, 261, 140, BLACK);
+	LCD_Fill(246+4, 130-2, 261, 140, BLACK);
+	LCD_Fill(246+6, 130-3, 261, 140, BLACK);
+	LCD_Fill(246+8, 130-4, 261, 140, BLACK);
+    LCD_Fill(246+10, 130-5, 261, 140, BLACK);
+	
+	/* 显示F */
+    TranferPicturetoTFT_LCD(320, 20, 320 + 64, 20 + 128, 3, 16384);
+	
+	LCD_Fill(335, 115, 335 + 45, 130, BLACK);
+	LCD_Fill(320, 130, 320 + 60, 91 + 50, BLACK);
+	
+	LCD_Fill(320,   130, 335, 140, BLACK);
+	LCD_Fill(320+2, 130-1, 335, 140, BLACK);
+	LCD_Fill(320+4, 130-2, 335, 140, BLACK);
+	LCD_Fill(320+6, 130-3, 335, 140, BLACK);
+	LCD_Fill(320+8, 130-4, 335, 140, BLACK);
+    LCD_Fill(320+10, 130-5, 335, 140, BLACK);
+			
+					
+//					/* 显示F */
+//                    TranferPicturetoTFT_LCD(320, 20, 320 + 64, 20 + 128, 1, 16384);
+//                    /* 显示F */
+//                    TranferPicturetoTFT_LCD(320, 20, 320 + 64, 20 + 128, 1, 16384);
+                    show_off_flash = FALSE;
+                }
+
+                set_off_delay = 0;
+            }
+        }
+        /* 显示通道保存成功 */
+        else if (save_ch_flag && !temp_flash_flag)//设置温度没完成时不能显示
+        {
+            setting_flag = TRUE;//占用住
+            static uint8_t save_ch_count;
+            static uint16_t save_ch_delay;
+            save_ch_delay ++;
+
+            if (save_ch_delay >= CH_SAVE_TIME)
+            {
+                save_ch_count++;
+
+                /* 显示C */
+                if (save_ch_count == 1)
+                {
+                    LCD_Fill(temp_actual.x1, temp_actual.y1, temp_actual_float.x1 + 64, temp_actual.y1 + 128, BLACK);
+                    TranferPicturetoTFT_LCD(85, 20, 64 + 85, 20 + 128, 5, 16384);
+                }
+                /* 显示H */
+                else if (save_ch_count == 2)
+                {
+                    TranferPicturetoTFT_LCD(159, 20, 159 + 64, 20 + 128, 6, 16384);
+                }
+                /* 显示横杠 */
+                else if (save_ch_count == 3)
+                {
+                    LCD_ShowPicture(229, 70, 55, 23, gImage_20);
+                }
+                /* 显示1-4 */
+                else if (save_ch_count == 4)
+                {
+                    if (save_ch_flag == 1)
+                    {
+                        /* 显示1 */
+                        LCD_ShowIntNum128(320, 20, 1, 1, WHITE, BLACK);
+                    }
+                    else if (save_ch_flag == 2)
+                    {
+                        /* 显示2 */
+                        LCD_ShowIntNum128(320, 20, 2, 1, WHITE, BLACK);
+                    }
+                    else if (save_ch_flag == 3)
+                    {
+                        /* 显示3 */
+                        LCD_ShowIntNum128(320, 20, 3, 1, WHITE, BLACK);
+                    }
+                    else if (save_ch_flag == 4)
+                    {
+                        /* 显示4 */
+                        LCD_ShowIntNum128(320, 20, 4, 1, WHITE, BLACK);
+                    }
+                }
+
+                if (save_ch_count >= 5)
+                {
+                    LCD_Fill(temp_actual.x1, temp_actual.y1, temp_actual_float.x1 + 64, temp_actual.y1 + 128, BLACK);
+                    LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);//把小数点显示回来
+                    last_actual_temp = 0;//刷新一遍温度
+                    save_ch_count = 0;
+                    save_ch_flag = FALSE;
+                    setting_flag = FALSE;//释放
+                }
+
+                save_ch_delay = 0;
+            }
+        }
+        /* 显示恢复默认出厂设置成功 */
+        else if (reset_flag && !show_set_temp)
+        {
+            setting_flag = TRUE;//占用住
+            static uint8_t show_reset_flash = FALSE;
+            static uint16_t set_reset_delay;
+            static uint8_t reset_flash_count;
+            static uint8_t first_in = 0;
+            /* 防止动画被打断 */
+            swork.sleep_time = 0;
+
+            if (first_in == 0)
+            {
+                /* 清除所有变量参数 */
+                /* 清除on */
+                show_on_flag = FALSE;
+                /* 清除off */
+                show_off_flag = FALSE;
+                /* 清除ch- */
+                save_ch_flag = FALSE;
+                /* 清除设置温度闪烁 */
+                temp_flash_flag = FALSE;
+                /* 清除设置风量闪烁 */
+                wind_flash_flag = FALSE;
+                setting_flag = FALSE;//释放
+                show_stop_wind_flag = FALSE;
+                set_time_flag = FALSE;
+                show_ch_value_flag = FALSE;
+                /* 清屏 */
+                LCD_Clear(BLACK);
+                /* 显示四个横杠 */
+                LCD_ShowPicture(90, 70, 55, 23, gImage_20);
+                LCD_ShowPicture(90 + 64 * 1 + 5, 70, 55, 23, gImage_20);
+                LCD_ShowPicture(90 + 64 * 2 + 10, 70, 55, 23, gImage_20);
+                LCD_ShowPicture(90 + 64 * 3 + 35, 70, 55, 23, gImage_20);
+                first_in = 1;
+            }
+
+            set_reset_delay++;
+
+            if (set_reset_delay >= SHOW_RESET_TIME)
+            {
+                set_reset_delay = 0;
+
+                if (!show_reset_flash)
+                {
+                    /* 清屏 */
+                    LCD_Clear(BLACK);
+                    reset_flash_count++;
+                    show_reset_flash = TRUE;
+
+                    if (reset_flash_count >= FLASH_COUNT)
+                    {
+                        if (swork.state == STOP)
+                        {
+                            /* 把数字显示回去 */
+                            /* 显示设置温度 */
+                            if (display_mode == 1)//显示摄氏度
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, *temp_set.num, temp_set.len, temp_set.fc, temp_set.bc);
+                            }
+                            else if (display_mode == 2)//显示华氏度
+                            {
+                                LCD_ShowIntNum128(temp_set.x1, temp_set.y1, set_temp_f, temp_set.len, temp_set.fc, temp_set.bc);
+                            }
+
+                            /* 显示设置风量 */
+                            LCD_ShowIntNum64(wind_set.x1, wind_set.y1, cold_mode_set_wind, wind_set.len, wind_set.fc, wind_set.bc);
+                            /*显示小数点图标*/
+                            LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                            LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 0, temp_actual_float.len,
+                                              temp_actual_float.fc, temp_actual_float.bc);
+                        }
+                        else if (swork.state == WORKING)
+                        {
+                            /* 显示实际温度 */
+                            if (lock_mode == 1)//锁定显示
+                            {
+                                if (display_mode == 1)//显示摄氏度
+                                {
+                                    if (actual_temp >= set_temp
+                                            && actual_temp - set_temp <= 30) //实际温度大于设置温度(但不超过20)直接显示设置温度（锁定上限）
+                                    {
+                                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, set_temp, temp_actual.len, temp_actual.fc, temp_actual.bc);
+                                    }
+                                    else if (actual_temp <= set_temp && set_temp - actual_temp <= 30)
+                                    {
+                                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, set_temp, temp_actual.len, temp_actual.fc, temp_actual.bc);
+                                    }
+                                    else
+                                    {
+                                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (*temp_actual.num) - set_calibration_temp, temp_actual.len,
+                                                          temp_actual.fc, temp_actual.bc);
+                                    }
+
+                                    LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                                }
+                                else if (display_mode == 2)//显示华氏度
+                                {
+                                    if (actual_temp - set_temp <= 3) //实际温度大于显示温度直接显示设置温度
+                                    {
+                                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (9 * (set_temp) / 5  + 32), temp_actual.len, temp_actual.fc,
+                                                          temp_actual.bc);
+                                    }
+                                    else
+                                    {
+                                        LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (9 * ((*temp_actual.num) - set_calibration_temp) / 5  + 32),
+                                                          temp_actual.len, temp_actual.fc,
+                                                          temp_actual.bc);
+                                    }
+
+                                    LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                                }
+                            }
+                            else if (lock_mode == 2)//显示不锁定
+                            {
+                                if (display_mode == 1)//显示摄氏度
+                                {
+                                    LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (*temp_actual.num) - set_calibration_temp, temp_actual.len,
+                                                      temp_actual.fc, temp_actual.bc);
+                                }
+                                else if (display_mode == 2)//显示华氏度
+                                {
+                                    LCD_ShowIntNum128(temp_actual.x1, temp_actual.y1, (9 * ((*temp_actual.num) - set_calibration_temp) / 5  + 32),
+                                                      temp_actual.len, temp_actual.fc,
+                                                      temp_actual.bc);
+                                }
+                            }
+
+                            /* 显示设置风量 */
+                            LCD_ShowIntNum64(wind_set.x1, wind_set.y1, set_wind, wind_set.len, wind_set.fc, wind_set.bc);
+                        }
+
+                        /* 显示华氏度或摄氏度图标 */
+                        if (display_mode == 1)
+                        {
+                            LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                        }
+                        else if (display_mode == 2)
+                        {
+                            LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                        }
+
+                        /* 显示线条 */
+                        LCD_Fill(0, 170, 480, 175, WHITE);
+                        LCD_Fill(0, 250, 480, 255, WHITE);
+                        LCD_Fill(238, 170, 242, 250, WHITE);
+                        /* 显示AIR1图标 */
+                        LCD_ShowPicture(air1_pic.x1, air1_pic.y1, 45, 21, gImage_1);
+                        /* 显示RUN图标 */
+                        LCD_ShowPicture(run_pic.x1, run_pic.y1, 38, 20, gImage_2);
+                        /* 显示小数点图标 */
+                        LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                        /* 显示闹钟图标 */
+                        LCD_ShowPicture(timer_pic.x1, timer_pic.y1, 41, 56, gImage_8);
+                        /* 显示S图标 */
+                        LCD_ShowPicture(s_pic.x1, s_pic.y1, 28, 29, gImage_9);
+                        /* 显示小数点 */
+                        LCD_ShowPicture(dot_pic.x1, dot_pic.y1, 19, 22, gImage_7);
+                        /* 显示设置时间 */
+                        LCD_ShowIntNum64(time_set.x1, time_set.y1, *time_set.num, time_set.len, time_set.fc, time_set.bc);
+
+                        /* 显示蜂鸣器图标 */
+                        if (2 == speak_mode)
+                        {
+                            LCD_ShowPicture(speaker_pic.x1, speaker_pic.y1, 34, 32, gImage_14);
+                        }
+
+                        //last_actual_temp = 0;//刷新一遍温度
+                        show_reset_flash = FALSE;
+                        setting_flag = FALSE;//释放
+                        first_in = 0;
+                        reset_flash_count = 0;
+                        reset_flag = FALSE;
+                    }
+                }
+                else
+                {
+                    /* 显示四个横杠 */
+                    LCD_ShowPicture(90, 70, 55, 23, gImage_20);
+                    LCD_ShowPicture(90 + 64 * 1 + 5, 70, 55, 23, gImage_20);
+                    LCD_ShowPicture(90 + 64 * 2 + 10, 70, 55, 23, gImage_20);
+                    LCD_ShowPicture(90 + 64 * 3 + 35, 70, 55, 23, gImage_20);
+                    show_reset_flash = FALSE;
+                }
+            }
+        }
+
+        /*************************** 图标类显示 *******************************/
+#if 0
+
+        /* 显示通道图标 */
+        if (last_ch != ch)
+        {
+            if (ch == 1)
+            {
+                LCD_ShowPicture(ch_1_pic.x1, ch_1_pic.y1, 36, 32, gImage_15); //选择通道1
+            }
+            else if (ch == 2)
+            {
+                LCD_ShowPicture(ch_2_pic.x1, ch_2_pic.y1, 36, 32, gImage_16); //选择通道2
+            }
+            else if (ch == 3)
+            {
+                LCD_ShowPicture(ch_3_pic.x1, ch_3_pic.y1, 36, 32, gImage_17); //选择通道3
+            }
+            else if (ch == 4)
+            {
+                LCD_ShowPicture(ch_4_pic.x1, ch_4_pic.y1, 36, 32, gImage_18); //选择通道4
+            }
+
+            if (last_ch == 1)
+            {
+                LCD_Fill(ch_1_pic.x1, ch_1_pic.y1, ch_1_pic.x1 + 36, ch_1_pic.y1 + 32, BLACK); //取消选择通道1
+            }
+            else if (last_ch == 2)
+            {
+                LCD_Fill(ch_2_pic.x1, ch_2_pic.y1, ch_2_pic.x1 + 36, ch_2_pic.y1 + 32, BLACK); //取消选择通道2
+            }
+            else if (last_ch == 3)
+            {
+                LCD_Fill(ch_3_pic.x1, ch_3_pic.y1, ch_3_pic.x1 + 36, ch_3_pic.y1 + 32, BLACK); //取消选择通道3
+            }
+            else if (last_ch == 4)
+            {
+                LCD_Fill(ch_4_pic.x1, ch_4_pic.y1, ch_4_pic.x1 + 36, ch_4_pic.y1 + 32, BLACK); //取消选择通道4
+            }
+
+            last_ch = ch;
+        }
+
+#endif
+
+        /* 显示太阳图标 */
+        if (swork.state == WORKING && !reset_flag)
+        {
+            static uint16_t show_sun_delay = SUN_FLISH_TIME;
+            show_sun_delay -- ;
+
+            if (!show_sun_delay)
+            {
+                show_sun_delay = SUN_FLISH_TIME;
+
+                if (show_sun_flag)
+                {
+                    LCD_Fill(sun_pic.x1, sun_pic.y1, sun_pic.x1 + 34, sun_pic.y1 + 32, BLACK);
+                    show_sun_flag = FALSE;
+                }
+                else
+                {
+                    LCD_ShowPicture(sun_pic.x1, sun_pic.y1, 34, 32, gImage_6);
+                    show_sun_flag = TRUE;
+                }
+            }
+        }
+        else if (swork.state == STOP)
+        {
+            LCD_Fill(sun_pic.x1, sun_pic.y1, sun_pic.x1 + 34, sun_pic.y1 + 32, BLACK);
+            show_sun_flag = FALSE;
+        }
+
+        /* 显示ADJUST图标（设置温度、风量、时间、通道选择） */
+        if (temp_flash_flag || wind_flash_flag || set_time_flag || show_off_flag || show_on_flag || show_ch_value_flag)
+        {
+            LCD_ShowPicture(adjust_pic.x1, adjust_pic.y1, 69, 20, gImage_13);
+            /* 设置参数时不允许休眠 */
+            swork.sleep_time  = 0;
+        }
+        else
+        {
+            LCD_Fill(adjust_pic.x1, adjust_pic.y1, adjust_pic.x1 + 69, adjust_pic.y1 + 20, BLACK);
+        }
+
+        /* 显示闹钟图标 */
+        if (time_countdown_flag)
+        {
+            refresh = FALSE;
+
+            if (lcd_run_time % ALARM_REFRESH_TIME == 0)
+            {
+                if (!show_time_pic_flag)
+                {
+                    show_time_pic_flag = TRUE;
+                    LCD_Fill(timer_pic.x1, timer_pic.y1, timer_pic.x1 + 41, timer_pic.y1 + 56, BLACK);
+                }
+                else
+                {
+                    LCD_ShowPicture(timer_pic.x1, timer_pic.y1, 41, 56, gImage_8);
+                    show_time_flag = FALSE;
+                    show_time_pic_flag = FALSE;
+                }
+            }
+        }
+        else
+        {
+            if (refresh == FALSE)
+            {
+                refresh = TRUE;
+                LCD_ShowPicture(timer_pic.x1, timer_pic.y1, 41, 56, gImage_8);
+                LCD_ShowIntNum64(time_set.x1, time_set.y1, *time_set.num, time_set.len, time_set.fc, time_set.bc);
+            }
+        }
+
+        /* 显示华氏度图标或摄氏度图标 */
+        if (last_display_mode != display_mode)
+        {
+            if (1 == display_mode)//显示摄氏度
+            {
+                LCD_ShowPicture(celsius_pic.x1, celsius_pic.y1, 38, 38, gImage_12);
+                LCD_Fill(fahrenheit_pic.x1, fahrenheit_pic.y1, fahrenheit_pic.x1 + 38, fahrenheit_pic.y1 + 38, BLACK);
+            }
+            else if (2 == display_mode)//显示华氏度
+            {
+                LCD_ShowPicture(fahrenheit_pic.x1, fahrenheit_pic.y1, 38, 38, gImage_11);
+                LCD_Fill(celsius_pic.x1, celsius_pic.y1, celsius_pic.x1 + 38, celsius_pic.y1 + 38, BLACK);
+            }
+
+            last_display_mode = display_mode;
+        }
+
+        /* 显示或关闭蜂鸣器图标 */
+        if (last_speak_mode != speak_mode)
+        {
+            if (1 == speak_mode)
+            {
+                LCD_Fill(speaker_pic.x1, speaker_pic.y1, speaker_pic.x1 + 34, speaker_pic.y1 + 32, BLACK);
+            }
+            else if (2 == speak_mode)
+            {
+                LCD_ShowPicture(speaker_pic.x1, speaker_pic.y1, 34, 32, gImage_14);
+            }
+
+            last_speak_mode = speak_mode;
+        }
+
+        /*************************** 动画类显示 *******************************/
+        /* 显示风扇动画 */
+        if (lcd_run_time % FAN_DISPLAY_TIME == 0 && !reset_flag)
+        {
+            if (0 == wind_flash_pic)
+            {
+                LCD_ShowPicture(wind_pic.x1, wind_pic.y1, 33, 32, gImage_3);
+                wind_flash_pic++;
+            }
+            else if (1 == wind_flash_pic)
+            {
+                LCD_ShowPicture(wind_pic.x1, wind_pic.y1, 33, 32, gImage_4);
+                wind_flash_pic++;
+            }
+            else if (2 == wind_flash_pic)
+            {
+                LCD_ShowPicture(wind_pic.x1, wind_pic.y1, 33, 32, gImage_5);
+                wind_flash_pic++;
+            }
+
+            if (wind_flash_pic >= 3)
+            {
+                wind_flash_pic = 0;
+            }
+        }
+
+        /* 检测到切换送风模式时先清一下屏，防止画面撕裂 */
+        if (cold_mode)
+        {
+            static uint16_t switch_time = 0;
+            switch_time++;
+
+            if (switch_time >= DELAY_ENTER_COLD_MODE_TIME)
+            {
+                switch_time = 0;
+                swork.state = COLD_MODE;
+                LCD_Fill(temp_actual.x1, temp_actual.y1, 428, temp_actual.y1 + 128, BLACK);
+            }
+        }
+    }
+    /* 睡眠模式显示界面 */
+    else if (swork.state == SLEEP)
+    {
+        /* 清除变量 */
+        if (last_state != swork.state)
+        {
+            last_state = swork.state;
+            /* 清除reset */
+            reset_flag = FALSE;
+            /* 清除on */
+            show_on_flag = FALSE;
+            /* 清除off */
+            show_off_flag = FALSE;
+            /* 清除ch- */
+            save_ch_flag = FALSE;
+            /* 清除设置温度闪烁 */
+            temp_flash_flag = FALSE;
+            /* 清除设置风量闪烁 */
+            wind_flash_flag = FALSE;
+            setting_flag = FALSE;//释放
+            show_stop_wind_flag = FALSE;
+            set_time_flag = FALSE;
+            show_ch_value_flag = FALSE;
+            last_state = swork.state;
+            /* 清除4个通道的显示 */
+            LCD_Fill(ch_1_pic.x1, ch_1_pic.y1, ch_1_pic.x1 + 36, ch_1_pic.y1 + 32, BLACK); //取消选择通道1
+            LCD_Fill(ch_2_pic.x1, ch_2_pic.y1, ch_2_pic.x1 + 36, ch_2_pic.y1 + 32, BLACK); //取消选择通道2
+            LCD_Fill(ch_3_pic.x1, ch_3_pic.y1, ch_3_pic.x1 + 36, ch_3_pic.y1 + 32, BLACK); //取消选择通道3
+            LCD_Fill(ch_4_pic.x1, ch_4_pic.y1, ch_4_pic.x1 + 36, ch_4_pic.y1 + 32, BLACK); //取消选择通道3
+            /* 清除实际温度显示 */
+            LCD_Fill(temp_actual.x1, temp_actual.y1, temp_actual_float.x1 + 64, temp_actual.y1 + 128, BLACK);
+            /* 清除设置时间显示 */
+            LCD_Fill(time_set.x1, time_set.y1, time_set.x1 + time_set.len * time_set.sizey, time_set.y1 + time_set.sizey, BLACK);
+            /* 清除设置风量显示 */
+            LCD_Fill(wind_set.x1, wind_set.y1, wind_set.x1 + wind_set.len * wind_set.sizey / 2 + 10, wind_set.y1 + wind_set.sizey,
+                     BLACK);
+            /* 清除摄氏度图标或华氏度图标 */
+            LCD_Fill(fahrenheit_pic.x1, fahrenheit_pic.y1, fahrenheit_pic.x1 + 38, fahrenheit_pic.y1 + 38, BLACK);
+            LCD_Fill(celsius_pic.x1, celsius_pic.y1, celsius_pic.x1 + 38, celsius_pic.y1 + 38, BLACK);
+            /* 清除小数点图标 */
+            LCD_Fill(dot_pic.x1, dot_pic.y1, dot_pic.x1 + 19, dot_pic.y1 + 22, BLACK);
+            /* 清除RUN图标图标 */
+            LCD_Fill(run_pic.x1, run_pic.y1, run_pic.x1 + 38, run_pic.y1 + 20, BLACK);
+            /* 清除太阳图标 */
+            LCD_Fill(sun_pic.x1, sun_pic.y1, sun_pic.x1 + 34, sun_pic.y1 + 32, BLACK);
+            /* 清除蜂鸣器图标 */
+            LCD_Fill(speaker_pic.x1, speaker_pic.y1, speaker_pic.x1 + 34, speaker_pic.y1 + 32, BLACK);
+            /* 清除ADJUST图标 */
+            LCD_Fill(adjust_pic.x1, adjust_pic.y1, adjust_pic.x1 + 69, adjust_pic.y1 + 20, BLACK);
+            /* 清除S图标 */
+            LCD_Fill(s_pic.x1, s_pic.y1, s_pic.x1 + 28, s_pic.y1 + 29, BLACK);
+            /* 清除风扇动画 */
+            LCD_Fill(wind_pic.x1, wind_pic.y1, wind_pic.x1 + 33, wind_pic.y1 + 32, BLACK);
+            /* 显示数字区域横杠 */
+            LCD_ShowPicture(90, 70, 55, 23, gImage_20);
+            LCD_ShowPicture(90 + 64 * 1 + 5, 70, 55, 23, gImage_20);
+            LCD_ShowPicture(90 + 64 * 2 + 10, 70, 55, 23, gImage_20);
+            LCD_ShowPicture(90 + 64 * 3 + 35, 70, 55, 23, gImage_20);
+            LCD_ShowPicture(wind_set.x1, time_set.y1, 32, 64, gImage_19);
+            LCD_ShowPicture(wind_set.x1 + 35 * 1, time_set.y1, 32, 64, gImage_19);
+            LCD_ShowPicture(wind_set.x1 + 35 * 2, time_set.y1, 32, 64, gImage_19);
+            LCD_ShowPicture(time_set.x1, time_set.y1, 32, 64, gImage_19);
+            LCD_ShowPicture(time_set.x1 + 35 * 1, time_set.y1, 32, 64, gImage_19);
+            LCD_ShowPicture(time_set.x1 + 35 * 2, time_set.y1, 32, 64, gImage_19);
+            /* 显示SLEEP图标 */
+            LCD_ShowPicture(sleep_pic.x1, sleep_pic.y1, 62, 20, gImage_21);
+            /* 显示线条 */
+            LCD_Fill(0, 170, 480, 175, WHITE);
+            LCD_Fill(0, 250, 480, 255, WHITE);
+            LCD_Fill(238, 170, 242, 250, WHITE);
+            /* 显示闹钟图标 */
+            LCD_ShowPicture(timer_pic.x1, timer_pic.y1, 41, 56, gImage_8);
+            /* 显示AIR1图标 */
+            LCD_ShowPicture(air1_pic.x1, air1_pic.y1, 45, 21, gImage_1);
+        }
+    }
+    /* 高温错误代码显示 */
+    else if (swork.state == OVER_TEMP_ERR)
+    {
+        extern uint8_t beep_flag;
+        static uint8_t err2_flash_count;
+        static uint16_t err2_delay;
+        err2_delay++;
+
+        if (err2_delay >= ERROR_FLISH_TIME)
+        {
+            err2_flash_count++;
+
+            if (err2_flash_count % 2 != FALSE)
+            {
+                /* 先清除原来的显示 */
+                LCD_Fill(temp_actual.x1, temp_actual.y1, temp_actual_float.x1 + 64, temp_actual.y1 + 128, BLACK);
+            }
+            else
+            {
+                beep_flag = BEEP_LONG;
+                /* 显示E */
+                TranferPicturetoTFT_LCD(85, 20, 85 + 64, 20 + 128, 3, 16384);
+                /* 显示r */
+                TranferPicturetoTFT_LCD(155, 20, 155 + 64, 20 + 128, 4, 16384);
+                /* 显示r */
+                TranferPicturetoTFT_LCD(229, 20, 229 + 64, 20 + 128, 4, 16384);
+                /* 显示2 */
+                LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 2, temp_actual_float.len, temp_actual_float.fc,
+                                  temp_actual_float.bc);
+            }
+
+            err2_delay = 0;
+        }
+
+        last_state = swork.state;
+    }
+    /* 低温错误代码显示 */
+    else if (swork.state == LOW_TEMP_ERR)
+    {
+        extern uint8_t beep_flag;
+        static uint8_t err1_flash_count;
+        static uint16_t err1_delay;
+        err1_delay++;
+
+        if (err1_delay >= ERROR_FLISH_TIME)
+        {
+            err1_flash_count++;
+
+            if (err1_flash_count % 2 != FALSE)
+            {
+                /* 先清除原来的显示 */
+                LCD_Fill(temp_actual.x1, temp_actual.y1, temp_actual_float.x1 + 64, temp_actual.y1 + 128, BLACK);
+            }
+            else
+            {
+                beep_flag = BEEP_LONG;
+                /* 显示E */
+                TranferPicturetoTFT_LCD(85, 20, 85 + 64, 20 + 128, 3, 16384);
+                /* 显示r */
+                TranferPicturetoTFT_LCD(155, 20, 155 + 64, 20 + 128, 4, 16384);
+                /* 显示r */
+                TranferPicturetoTFT_LCD(229, 20, 229 + 64, 20 + 128, 4, 16384);
+                /* 显示1 */
+                LCD_ShowIntNum128(temp_actual_float.x1, temp_actual_float.y1, 1, temp_actual_float.len, temp_actual_float.fc,
+                                  temp_actual_float.bc);
+            }
+
+            err1_delay = 0;
+        }
+
+        last_state = swork.state;
+    }
+    /* 冷风模式下显示 */
+    else if (swork.state == COLD_MODE)
+    {
+        static uint8_t show_cold_mode_flag = FALSE;
+        static uint16_t last_cold_mode_set_wind;
+        extern uint8_t beep_flag;
+
+        if (last_state != swork.state)
+        {
+            beep_flag = BEEP_LONG;
+            last_state = swork.state;
+            /* 清除reset */
+            reset_flag = FALSE;
+            /* 清除on */
+            show_on_flag = FALSE;
+            /* 清除off */
+            show_off_flag = FALSE;
+            /* 清除ch- */
+            save_ch_flag = FALSE;
+            /* 清除设置温度闪烁 */
+            temp_flash_flag = FALSE;
+            /* 清除设置风量闪烁 */
+            wind_flash_flag = FALSE;
+            setting_flag = FALSE;//释放
+            show_stop_wind_flag = FALSE;
+            set_time_flag = FALSE;
+            show_ch_value_flag = FALSE;
+            /* 清除4个通道的显示 */
+            LCD_Fill(ch_1_pic.x1, ch_1_pic.y1, ch_1_pic.x1 + 36, ch_1_pic.y1 + 32, BLACK); //取消选择通道1
+            LCD_Fill(ch_2_pic.x1, ch_2_pic.y1, ch_2_pic.x1 + 36, ch_2_pic.y1 + 32, BLACK); //取消选择通道2
+            LCD_Fill(ch_3_pic.x1, ch_3_pic.y1, ch_3_pic.x1 + 36, ch_3_pic.y1 + 32, BLACK); //取消选择通道3
+            LCD_Fill(ch_4_pic.x1, ch_4_pic.y1, ch_4_pic.x1 + 36, ch_4_pic.y1 + 32, BLACK); //取消选择通道3
+            /* 清除实际温度显示 */
+            LCD_Fill(temp_actual.x1, temp_actual.y1, temp_actual_float.x1 + 64, temp_actual.y1 + 128, BLACK);
+            /* 清除设置时间显示 */
+            LCD_Fill(time_set.x1, time_set.y1, time_set.x1 + time_set.len * time_set.sizey, time_set.y1 + time_set.sizey, BLACK);
+            /* 清除设置风量显示 */
+            LCD_Fill(wind_set.x1, wind_set.y1, wind_set.x1 + wind_set.len * wind_set.sizey / 2 + 10, wind_set.y1 + wind_set.sizey,
+                     BLACK);
+            /* 清除摄氏度图标或华氏度图标 */
+            LCD_Fill(fahrenheit_pic.x1, fahrenheit_pic.y1, fahrenheit_pic.x1 + 38, fahrenheit_pic.y1 + 38, BLACK);
+            LCD_Fill(celsius_pic.x1, celsius_pic.y1, celsius_pic.x1 + 38, celsius_pic.y1 + 38, BLACK);
+            /* 清除小数点图标 */
+            LCD_Fill(dot_pic.x1, dot_pic.y1, dot_pic.x1 + 19, dot_pic.y1 + 22, BLACK);
+            /* 清除RUN图标图标 */
+            LCD_Fill(run_pic.x1, run_pic.y1, run_pic.x1 + 38, run_pic.y1 + 20, BLACK);
+            /* 清除太阳图标 */
+            LCD_Fill(sun_pic.x1, sun_pic.y1, sun_pic.x1 + 34, sun_pic.y1 + 32, BLACK);
+            /* 清除蜂鸣器图标 */
+            LCD_Fill(speaker_pic.x1, speaker_pic.y1, speaker_pic.x1 + 34, speaker_pic.y1 + 32, BLACK);
+            /* 清除ADJUST图标 */
+            LCD_Fill(adjust_pic.x1, adjust_pic.y1, adjust_pic.x1 + 69, adjust_pic.y1 + 20, BLACK);
+            /* 清除S图标 */
+            LCD_Fill(s_pic.x1, s_pic.y1, s_pic.x1 + 28, s_pic.y1 + 29, BLACK);
+            /* 清除闹钟显示 */
+            LCD_Fill(time_set.x1, time_set.y1, time_set.x1 + time_set.len * time_set.sizey, time_set.y1 + time_set.sizey, BLACK);
+            /* 显示o */
+            TranferPicturetoTFT_LCD(320, 180, 320 + 32, 180 + 64, 9, 4096);
+            /* 显示f */
+            TranferPicturetoTFT_LCD(362, 180, 362 + 32, 180 + 64, 10, 4096);
+            /* 显示f */
+            TranferPicturetoTFT_LCD(404, 180, 404 + 32, 180 + 64, 10, 4096);
+            /* 显示设置风量 */
+            LCD_ShowIntNum64(wind_set.x1, wind_set.y1, cold_mode_set_wind, wind_set.len, wind_set.fc, wind_set.bc);
+            /* 显示闹钟图标 */
+            LCD_ShowPicture(timer_pic.x1, timer_pic.y1, 41, 56, gImage_8);
+            last_cold_mode_set_wind = cold_mode_set_wind;
+            /* 显示C */
+            TranferPicturetoTFT_LCD(85, 20, 85 + 64, 20 + 128, 5, 16384);
+            /* 显示o */
+            TranferPicturetoTFT_LCD(159, 20, 159 + 64, 20 + 128, 7, 16384);
+            /* 显示1 */
+            LCD_ShowIntNum128(230, 20, 1, 1, WHITE, BLACK);
+            /* 显示d */
+            TranferPicturetoTFT_LCD(320, 20, 320 + 64, 20 + 128, 8, 16384);
+        }
+
+        /* 显示Cold */
+        if (lcd_run_time % COLD_REFRESH_TIME == 0)
+        {
+            if (!show_cold_mode_flag)
+            {
+                /* 清屏 */
+                LCD_Fill(temp_actual.x1, temp_actual.y1, 428, temp_actual.y1 + 128, BLACK);
+                show_cold_mode_flag = TRUE;
+            }
+            else
+            {
+                /* 显示C */
+                TranferPicturetoTFT_LCD(85, 20, 85 + 64, 20 + 128, 5, 16384);
+                /* 显示o */
+                TranferPicturetoTFT_LCD(159, 20, 159 + 64, 20 + 128, 7, 16384);
+                /* 显示1 */
+                LCD_ShowIntNum128(230, 20, 1, 1, WHITE, BLACK);
+                /* 显示d */
+                TranferPicturetoTFT_LCD(320, 20, 320 + 64, 20 + 128, 8, 16384);
+                show_cold_mode_flag = FALSE;
+            }
+        }
+
+        /* 显示风扇动画 */
+        if (lcd_run_time % FAN_DISPLAY_TIME == 0)
+        {
+            if (0 == wind_flash_pic)
+            {
+                LCD_ShowPicture(wind_pic.x1, wind_pic.y1, 33, 32, gImage_3);
+                wind_flash_pic++;
+            }
+            else if (1 == wind_flash_pic)
+            {
+                LCD_ShowPicture(wind_pic.x1, wind_pic.y1, 33, 32, gImage_4);
+                wind_flash_pic++;
+            }
+            else if (2 == wind_flash_pic)
+            {
+                LCD_ShowPicture(wind_pic.x1, wind_pic.y1, 33, 32, gImage_5);
+                wind_flash_pic++;
+            }
+
+            if (wind_flash_pic >= 3)
+            {
+                wind_flash_pic = 0;
+            }
+        }
+
+        if (last_cold_mode_set_wind != cold_mode_set_wind)
+        {
+            /* 显示设置风量 */
+            LCD_ShowIntNum64(wind_set.x1, wind_set.y1, cold_mode_set_wind, wind_set.len, wind_set.fc, wind_set.bc);
+            last_cold_mode_set_wind = cold_mode_set_wind;
+        }
+    }
+}

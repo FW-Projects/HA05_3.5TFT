@@ -1,0 +1,214 @@
+/**
+  **************************************************************************
+  * @file     flash.c
+  * @brief    flash program
+  **************************************************************************
+  *                       Copyright notice & Disclaimer
+  *
+  * The software Board Support Package (BSP) that is made available to
+  * download from Artery official website is the copyrighted work of Artery.
+  * Artery authorizes customers to use, copy, and distribute the BSP
+  * software and its related documentation for the purpose of design and
+  * development in conjunction with Artery microcontrollers. Use of the
+  * software is governed by this copyright notice and the following disclaimer.
+  *
+  * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  *
+  **************************************************************************
+  */
+
+#include "flash.h"
+/**
+  * @brief  flash write.
+  * @param  none
+  * @retval none
+  */
+uint8_t flash_erase(uint32_t addr, uint32_t size)
+{
+    uint32_t end_addr;
+    uint32_t start_sector_addr, end_sector_addr;
+
+    if (addr < FLASH_START_ADDR || size == 0)
+        return 0;
+    
+    end_addr = addr + size - 1;
+    if (end_addr > FLASH_END_ADDR)
+        return 0;
+
+    /* 解锁 flash 编程/擦除操作 */
+    flash_unlock();
+    /* 清除标志位 */
+    flash_flag_clear(FLASH_PRGMERR_FLAG | FLASH_EPPERR_FLAG);
+
+    /* 计算擦除的起始 sector 地址和结束 sector 地址
+    *      地址需要对齐到物理 sector 地址，
+    *      即必须是 FLASH_START_ADDR + n * FLASH_BANK_SECTOR_SIZE
+    */
+    start_sector_addr = FLASH_BANK_START_ADDR +
+                        (addr - FLASH_BANK_START_ADDR) /
+                        FLASH_BANK_SECTOR_SIZE * FLASH_BANK_SECTOR_SIZE;
+
+    end_sector_addr = FLASH_BANK_START_ADDR +
+                    (end_addr - FLASH_BANK_START_ADDR) /
+                    FLASH_BANK_SECTOR_SIZE * FLASH_BANK_SECTOR_SIZE;
+
+    /* 擦除 flash */
+    while (start_sector_addr <= end_sector_addr) {
+        if (flash_sector_erase(start_sector_addr) != FLASH_OPERATE_DONE) {
+            flash_lock();
+            return 0;
+        }
+
+        start_sector_addr += FLASH_BANK_SECTOR_SIZE;
+    }
+
+    /* 锁定 flash 编程/擦除操作 */
+    flash_lock();
+
+    return 1;
+}
+
+uint8_t flash_program_byte(uint32_t addr, uint8_t *data, uint32_t size)
+{
+    uint32_t end_addr;
+
+    if (addr < FLASH_START_ADDR || addr % 4 != 0)
+        return 0;
+    
+    end_addr = addr + size - 1;
+    if (end_addr > FLASH_END_ADDR)
+        return 0;
+
+    /* 解锁 flash 编程/擦除操作 */
+    flash_unlock();
+    /* 清除标志位 */
+    flash_flag_clear(FLASH_PRGMERR_FLAG | FLASH_EPPERR_FLAG);
+
+    /* 编程 flash */
+    while (addr <= end_addr) {
+        if (flash_byte_program(addr, *data++) != FLASH_OPERATE_DONE) {
+            flash_lock();
+            return 0;
+        }
+
+        addr++;
+    }
+
+    /* 锁定 flash 编程/擦除操作 */
+    flash_lock();
+    
+    return 1;
+}
+
+uint8_t flash_erase_check(uint32_t addr, uint32_t size)
+{
+    uint32_t end_addr;
+
+    if (addr < FLASH_START_ADDR)
+        return 0;
+    
+    end_addr = addr + size - 1;
+    if (end_addr > FLASH_END_ADDR)
+        return 0;
+
+    while (addr <= end_addr) {
+        if (*(uint8_t *)addr != 0xFF)
+            return 0;
+
+        addr++;
+    }
+
+    return 1;
+}
+
+uint8_t flash_program_byte_check(uint32_t addr, uint8_t *data, uint32_t size)
+{
+    uint32_t end_addr;
+
+    if (addr < FLASH_START_ADDR)
+        return 0;
+    
+    end_addr = addr + size - 1;
+    if (end_addr > FLASH_END_ADDR)
+        return 0;
+
+    while (addr <= end_addr) {
+        if (*(uint8_t *)addr != *data++)
+            return 0;
+
+        addr++;
+    }
+
+    return 1;
+}
+
+
+
+
+
+uint8_t flash_program_halfword(uint32_t addr, uint16_t *data, uint32_t size)
+{
+    uint32_t end_addr;
+
+    if (addr < FLASH_START_ADDR || addr % 4 != 0)
+        return 0;
+    
+    end_addr = addr + size - 1;
+    if (end_addr > FLASH_END_ADDR)
+        return 0;
+
+    /* 解锁 flash 编程/擦除操作 */
+    flash_unlock();
+    /* 清除标志位 */
+    flash_flag_clear(FLASH_PRGMERR_FLAG | FLASH_EPPERR_FLAG);
+
+    /* 编程 flash */
+    while (addr <= end_addr) {
+        if (flash_halfword_program(addr, *data++) != FLASH_OPERATE_DONE) {
+            flash_lock();
+            return 0;
+        }
+
+        addr++;
+    }
+
+    /* 锁定 flash 编程/擦除操作 */
+    flash_lock();
+    
+    return 1;
+}
+
+
+uint8_t flash_program_halfbyte(uint32_t addr, uint16_t *data, uint32_t size)
+{
+    if(!flash_erase(addr,DATA_SIZE))
+	{
+	    return 1;//flash erase err
+	}
+	if(!flash_erase_check(addr,DATA_SIZE))
+	{
+	    return 2;//flash erase check err
+	}
+	if(!flash_program_halfword(addr,data,DATA_SIZE))
+	{
+	    return 3;//flash program  err
+	}
+
+	return 0;
+}
+
+uint16_t flash_read(uint32_t addr,uint32_t size)
+{
+   uint16_t read_data = 0;
+	uint16_t read_data_l = 0;
+	uint16_t read_data_h = 0;
+	read_data = (*(uint32_t*)addr);
+	
+    return read_data;
+
+}
