@@ -659,7 +659,10 @@ void show_icon(void)
 				}		
 				else if(sFWHA01_t.Work_handle_state == HANDLE_WORKING && sFWHA01_t.page == WORK_PAGE)
 				{
-					TranferPicturetoTFT_LCD(sleep_icon.x1,sleep_icon.y1,sleep_icon.length,sleep_icon.winth,REFRESH_SLEEP_ICON);
+					if(sFWHA01_t.language_state == CHINESE)
+						TranferPicturetoTFT_LCD(sleep_icon.x1,sleep_icon.y1,sleep_icon.length,sleep_icon.winth,REFRESH_SLEEP_ICON);
+					else if(sFWHA01_t.language_state == ENGLISH)
+						TranferPicturetoTFT_LCD(sleep_icon.x1,sleep_icon.y1,sleep_icon.length,sleep_icon.winth,REFRESH_SLEEP_ICON_ENG);
 					last_output_value = -1;
 					//刷新功率条
 				}
@@ -1016,7 +1019,7 @@ static void show_output(HA01_Handle *this)
         else
         {
             // 根据模式计算实际温度
-            display_actual_data = this->system_parameter.actual_temp;
+            display_actual_data = this->system_parameter.actual_temp - this->system_parameter.cal_data;
             if (sFWHA01_t.run_mode == Power_Mode)
                 display_actual_data -= POWER_TEMP;
 
@@ -1084,6 +1087,8 @@ static void show_temp(void)
 				// 重置缓存
 				sFWHA01_t.system_parameter.last_actual_temp = 0;
 				sFWHA01_t.system_parameter.last_actual_temp_f_display = 0;
+				sFWHA01_t.system_parameter.last_curve_actual_temp = 0;
+				sFWHA01_t.system_parameter.last_curve_actual_temp_f_display = 0;
 				
 				// 更新设定温度显示
 				if (sFWHA01_t.system_parameter.last_set_temp != sFWHA01_t.system_parameter.set_temp ||
@@ -1154,8 +1159,18 @@ static void show_temp(void)
 									disp_actual = sFWHA01_t.system_parameter.cpu_temp;
 							}
 						}
-						actual_temp_refesh_time = (sFWHA01_t.page == CURVE_PAGE || sFWHA01_t.page == LOGO) ? 20 :
-											 (sFWHA01_t.Work_handle_state == HANDLE_SLEEP) ? 0 : ACTUAL_TEMP_REFRESH_TIME;
+						if(sFWHA01_t.page == CURVE_PAGE || sFWHA01_t.page == LOGO)
+						{
+							actual_temp_refesh_time = 20;
+						}
+						else if(sFWHA01_t.Work_handle_state == HANDLE_SLEEP)
+						{
+							actual_temp_refesh_time = ACTUAL_TEMP_REFRESH_TIME;
+						}
+						else
+						{
+							actual_temp_refesh_time = ACTUAL_TEMP_REFRESH_TIME;
+						}
 
 						// 更新实际温度显示
 
