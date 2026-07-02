@@ -37,8 +37,8 @@
 
 /* private typedef -----------------------------------------------------------*/
 /* add user code begin private typedef */
-#define SOFTWARE_VERSTION "V2.0.5"
-#define HARDWARE_VERSTION "V2.1.0"
+#define SOFTWARE_VERSTION "V1.0.8"
+#define HARDWARE_VERSTION "V1.0.1"
 /* add user code end private typedef */
 
 /* private define ------------------------------------------------------------*/
