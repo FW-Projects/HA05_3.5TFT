@@ -49,14 +49,14 @@ void FWHA01_Init(HA01_Handle *FWHA01)
 	FWHA01->general_parameter.ch = 0,
 	FWHA01->system_parameter.last_pwm_out = 1000;
 	/* ch set */
-	FWHA01->system_parameter.ch1_set_temp = 320,
-	FWHA01->system_parameter.ch2_set_temp = 350,
-	FWHA01->system_parameter.ch3_set_temp = 380,
+	FWHA01->system_parameter.ch1_set_temp = 350,
+	FWHA01->system_parameter.ch2_set_temp = 380,
+	FWHA01->system_parameter.ch3_set_temp = 400,
 	FWHA01->system_parameter.last_sleep_air_data = 0,
 	FWHA01->system_parameter.sleep_air_data = 0,
-	FWHA01->system_parameter.ch1_set_air = 40,
-	FWHA01->system_parameter.ch2_set_air = 50,
-	FWHA01->system_parameter.ch3_set_air = 60,
+	FWHA01->system_parameter.ch1_set_air = 20,
+	FWHA01->system_parameter.ch2_set_air = 30,
+	FWHA01->system_parameter.ch3_set_air = 40,
 	FWHA01->system_parameter.cold_mode_set_air = 100,
 	FWHA01->system_parameter.air_data = 50,
 	/* en working set */

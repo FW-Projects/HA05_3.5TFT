@@ -303,14 +303,14 @@ void get_data_from_b(void)
 void get_reset_data(void)
 {
 	sFWHA01_t.system_parameter.set_temp = 380;
-	sFWHA01_t.system_parameter.air_data= 80;
+	sFWHA01_t.system_parameter.air_data= 40;
 	sFWHA01_t.system_parameter.cold_mode_set_air= 100;
-	sFWHA01_t.system_parameter.ch1_set_temp = 320;
-	sFWHA01_t.system_parameter.ch1_set_air = 50;
-	sFWHA01_t.system_parameter.ch2_set_temp = 350;
-	sFWHA01_t.system_parameter.ch2_set_air = 60;
-	sFWHA01_t.system_parameter.ch3_set_temp = 380;
-	sFWHA01_t.system_parameter.ch3_set_air = 80;
+	sFWHA01_t.system_parameter.ch1_set_temp = 350;
+	sFWHA01_t.system_parameter.ch1_set_air = 20;
+	sFWHA01_t.system_parameter.ch2_set_temp = 380;
+	sFWHA01_t.system_parameter.ch2_set_air = 30;
+	sFWHA01_t.system_parameter.ch3_set_temp = 400;
+	sFWHA01_t.system_parameter.ch3_set_air = 40;
 	sFWHA01_t.work_mode = WORK_NORMAL;
 	sFWHA01_t.temp_unit = CELSIUS;
 	sFWHA01_t.speak_state = SPEAKER_OPEN;
@@ -336,7 +336,7 @@ void check_data_all(void)
 	
 	if(sFWHA01_t.system_parameter.air_data > MAX_SET_AIR || sFWHA01_t.system_parameter.air_data < MIN_SET_AIR)
 	{
-		sFWHA01_t.system_parameter.air_data = 80;
+		sFWHA01_t.system_parameter.air_data = 40;
 	}
 	
 	if(sFWHA01_t.system_parameter.cold_mode_set_air > MAX_SET_AIR || sFWHA01_t.system_parameter.cold_mode_set_air < MIN_SET_AIR)
@@ -346,28 +346,28 @@ void check_data_all(void)
 	
 	if(sFWHA01_t.system_parameter.ch1_set_temp > MAX_SET_TEMP || sFWHA01_t.system_parameter.ch1_set_temp < MIN_SET_TEMP)
 	{
-		sFWHA01_t.system_parameter.ch1_set_temp = 320;
+		sFWHA01_t.system_parameter.ch1_set_temp = 350;
 	}
 	if(sFWHA01_t.system_parameter.ch2_set_temp > MAX_SET_TEMP || sFWHA01_t.system_parameter.ch2_set_temp < MIN_SET_TEMP)
 	{
-		sFWHA01_t.system_parameter.ch2_set_temp = 350;
+		sFWHA01_t.system_parameter.ch2_set_temp = 380;
 	}
 	if(sFWHA01_t.system_parameter.ch3_set_temp > MAX_SET_TEMP || sFWHA01_t.system_parameter.ch3_set_temp < MIN_SET_TEMP)
 	{
-		sFWHA01_t.system_parameter.ch3_set_temp = 380;
+		sFWHA01_t.system_parameter.ch3_set_temp = 400;
 	}
 	
 	if(sFWHA01_t.system_parameter.ch1_set_air > MAX_SET_AIR || sFWHA01_t.system_parameter.ch1_set_air < MIN_SET_AIR)
 	{
-		sFWHA01_t.system_parameter.ch1_set_air = 50;
+		sFWHA01_t.system_parameter.ch1_set_air = 20;
 	}
 	if(sFWHA01_t.system_parameter.ch2_set_air > MAX_SET_AIR || sFWHA01_t.system_parameter.ch2_set_air < MIN_SET_AIR)
 	{
-		sFWHA01_t.system_parameter.ch2_set_air = 60;
+		sFWHA01_t.system_parameter.ch2_set_air = 30;
 	}
 	if(sFWHA01_t.system_parameter.ch3_set_air > MAX_SET_AIR || sFWHA01_t.system_parameter.ch3_set_air < MIN_SET_AIR)
 	{
-		sFWHA01_t.system_parameter.ch3_set_air = 80;
+		sFWHA01_t.system_parameter.ch3_set_air = 40;
 	}
 	
 	if(sFWHA01_t.work_mode != WORK_CURVE && sFWHA01_t.work_mode != WORK_NORMAL)

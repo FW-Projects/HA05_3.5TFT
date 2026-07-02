@@ -2198,7 +2198,7 @@ void LCD_VISION(uint16_t x, uint16_t y,  uint8_t len, uint16_t fc, uint16_t bc, 
 				LCD_ShowChar(x + t * sizex, y, '.', fc, bc, sizey, 0);
 				break;
 			case 6:
-				LCD_ShowChar(x + t * sizex, y, '7', fc, bc, sizey, 0);
+				LCD_ShowChar(x + t * sizex, y, '8', fc, bc, sizey, 0);
 				break;
 		}
         

@@ -264,7 +264,8 @@ static void get_handle_error_state(HA01_Handle *this)
 		if(sFWHA01_t.run_mode == Cold_Mode)
 		{
 			fan_run_flag = true;
-            tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.cold_mode_set_air * 0.56 + 30);
+//            tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.cold_mode_set_air * 0.56 + 30);
+			tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.cold_mode_set_air * 0.875 + 30);
 		}
 		else
 		{
@@ -304,7 +305,8 @@ static void get_handle_error_state(HA01_Handle *this)
 					if (fan_run_flag == false)
 					{
 						/* open fan output with a half of max set val*/
-						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data * 0.56 + 30);
+//						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data * 0.56 + 30);
+						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data * 0.875 + 30);
 					}
 				}
 				else if (this->system_parameter.actual_temp >= 70 && this->system_parameter.actual_temp < 250)
@@ -313,8 +315,8 @@ static void get_handle_error_state(HA01_Handle *this)
 					{
 						/* open fan output with actual temp change*/
 						this->system_parameter.sleep_air_data = this->system_parameter.actual_temp * 0.4;
-//						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data * 1.13 + 30);
-						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data * 0.56 + 30);
+//						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data * 0.56 + 30);
+						tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.sleep_air_data * 0.875 + 30);
 					}
 				}
 				else
@@ -335,15 +337,16 @@ static void get_handle_error_state(HA01_Handle *this)
 				}
 				
 				/* open fan output with user set val */
-				tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.air_data * 0.56 + 30);
+//				tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.air_data * 0.56 + 30);
+				tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, this->system_parameter.air_data * 0.875 + 30);
 			}
 		}
         break;
 
     case 1:
         /* open fan output with max set val */
-        tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, MAX_SET_AIR * 0.56 + 30);
-
+//        tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, MAX_SET_AIR * 0.56 + 30);
+		 tmr_channel_value_set(TMR2, TMR_SELECT_CHANNEL_2, MAX_SET_AIR * 0.875 + 30);
         if (this->handle_error_state == HANDLE_OK)
         {
             control_step = 0;

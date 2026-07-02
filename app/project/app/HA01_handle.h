@@ -3,7 +3,7 @@
 #include "at32f415.h"
 #include "stdbool.h"
 
-#define SOFTWARE_VERSTION "V1.0.7"
+#define SOFTWARE_VERSTION "V1.0.8"
 #define HARDWARE_VERSTION "V1.0.1"
 
 

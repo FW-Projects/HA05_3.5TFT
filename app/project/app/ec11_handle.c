@@ -1703,12 +1703,12 @@ void ec11_event_handle(void)
         sFWHA01_t.system_parameter.set_temp = 380;
 		sFWHA01_t.system_parameter.air_data = 40;
         sFWHA01_t.system_parameter.cal_data= 0;
-        sFWHA01_t.system_parameter.ch1_set_temp = 380;
-        sFWHA01_t.system_parameter.ch2_set_temp = 400;
-        sFWHA01_t.system_parameter.ch3_set_temp = 420;
-		sFWHA01_t.system_parameter.ch1_set_air = 80;
-		sFWHA01_t.system_parameter.ch2_set_air = 100;
-		sFWHA01_t.system_parameter.ch3_set_air = 120;
+        sFWHA01_t.system_parameter.ch1_set_temp = 350;
+        sFWHA01_t.system_parameter.ch2_set_temp = 380;
+        sFWHA01_t.system_parameter.ch3_set_temp = 400;
+		sFWHA01_t.system_parameter.ch1_set_air = 20;
+		sFWHA01_t.system_parameter.ch2_set_air = 30;
+		sFWHA01_t.system_parameter.ch3_set_air = 40;
 		sFWHA01_t.general_parameter.ch = 0;
         sFWHA01_t.system_parameter.set_sleep_time = 0;
         /* reset function data */
