@@ -393,7 +393,7 @@ void show_icon(void)
 		if (sFWHA01_t.last_temp_unit != sFWHA01_t.temp_unit)
 		{
 			/* main uint */
-			if (sFWHA01_t.page == WORK_PAGE)
+			if (sFWHA01_t.page == WORK_PAGE && sFWHA01_t.handle_error_state == HANDLE_OK)
 			{
 				if (sFWHA01_t.temp_unit == CELSIUS)
 					TranferPicturetoTFT_LCD(200, 170, 20, 21, WORK_CELSIUS_ICON);
@@ -865,10 +865,13 @@ void show_curve(HA01_Handle *this)
 //			
 //		}
 
+		if(sFWHA01_t.handle_error_state == HANDLE_OK)
+		{
         LCD_Show_Curve(18, 40, 376, 250, display_temp, display_air,
                        this->system_parameter.temp_buff, this->system_parameter.air_buff);
-        LCD_Show_Grid(18, 40, 376, 250, 0x840f, this->temp_unit);
-
+        
+		}
+		LCD_Show_Grid(18, 40, 376, 250, 0x840f, this->temp_unit);
         return;
     }
     else if (this->page == WORK_PAGE)
@@ -1091,8 +1094,9 @@ static void show_temp(void)
 				sFWHA01_t.system_parameter.last_curve_actual_temp_f_display = 0;
 				
 				// 更新设定温度显示
-				if (sFWHA01_t.system_parameter.last_set_temp != sFWHA01_t.system_parameter.set_temp ||
+				if ((sFWHA01_t.system_parameter.last_set_temp != sFWHA01_t.system_parameter.set_temp ||
 					sFWHA01_t.system_parameter.last_set_temp_f_display != sFWHA01_t.system_parameter.set_temp_f_display)
+					&& sFWHA01_t.handle_error_state == HANDLE_OK)
 				{
 					sFWHA01_t.system_parameter.last_set_temp = sFWHA01_t.system_parameter.set_temp;
 					sFWHA01_t.system_parameter.last_set_temp_f_display = sFWHA01_t.system_parameter.set_temp_f_display;
@@ -1233,8 +1237,9 @@ static void show_temp(void)
 				}
 				
 				// 更新风速显示
-				if (sFWHA01_t.system_parameter.last_air_data != sFWHA01_t.system_parameter.air_data ||
+				if ((sFWHA01_t.system_parameter.last_air_data != sFWHA01_t.system_parameter.air_data ||
 					sFWHA01_t.system_parameter.last_cold_mode_set_air != sFWHA01_t.system_parameter.cold_mode_set_air)
+					&& sFWHA01_t.handle_error_state == HANDLE_OK)
 				{
 					sFWHA01_t.system_parameter.last_air_data = sFWHA01_t.system_parameter.air_data;
 					sFWHA01_t.system_parameter.last_cold_mode_set_air = sFWHA01_t.system_parameter.cold_mode_set_air;
