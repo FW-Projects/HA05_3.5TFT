@@ -11,11 +11,33 @@ static void get_handle_error_state(HA01_Handle *this);
 //static voidtrol(HA01_Handle *this);
 static void relay_control(HA01_Handle *this);
 
-int8_t off_set_buff[41] = {22, 21, 21, 21, 21, 21, 21, 21, 20, 20,
-                           21, 21, 21, 20, 19, 19, 19, 19, 18, 17,
-                           17, 16, 16, 15, 14, 13, 12, 11, (11), (10 - 2),
-                           (9), (9), (8), 12, 15, 17, 21, 24, 26, 28, 33
+//int8_t off_set_buff[41] = {22, 21, 21, 21, 21, 21, 21, 21, 20, 20,
+//						// 100
+//                           21, 21, 21, 20, 19, 19, 19, 19, 18, 17,
+//						// 200
+//                           17, 16, 16, 15, 14, 13, 12, 11, 11, 8,
+//						// 300
+//                           9, 9, 8, 12, 15, 17, 21, 24, 26, 28,
+//						// 400
+//						   33
+//						// 500
+//                          };
+
+int8_t off_set_buff[41] = {37, 34, 32, 30, 28, 25, 24, 23, 22, 21,
+						// 100
+                           20, 18, 16, 15, 14, 13, 11, 9, 7, 5,
+						// 200
+                           3, 3, 3, 3, 2, 2, 2, 1, 1, 1,
+						// 300
+                           0, -3, -5, -6, -7, -9, -12, -14, -16, -18,
+						// 400
+						   -19
+						// 500
                           };
+
+
+
+
 
 int8_t wind_set_20_buff[41] = {22 - 10, 21 - 10, 21 - 10, 21 - 10, 21 - 10, 21 - 10, 21 - 10, 21 - 10, 20 - 10, 20 - 10,
                                21 - 10, 21 - 10, 21 - 10, 20 - 10, 19 - 10, 19 - 10, 19 - 10, 19 - 10, 18 - 10, 17 - 10,
@@ -215,10 +237,27 @@ static void get_handle_error_state(HA01_Handle *this)
 						}
 						else if (this->system_parameter.actual_temp <= MIN_ACTUAL_TEMP)
 						{
-							this->handle_error_state = HANDLE_LOW_TEMP_ERR;
-							this->system_parameter.error_time = 0;
-							get_step = 1;
-							break;
+							if(this->system_parameter.set_temp < 150)
+							{
+								if (this->system_parameter.actual_temp + this->system_parameter.temp_linear_data<= MIN_ACTUAL_TEMP)
+								{
+									this->handle_error_state = HANDLE_LOW_TEMP_ERR;
+									this->system_parameter.error_time = 0;
+									get_step = 1;
+									break;
+								}
+							}
+							else
+							{
+								if (this->system_parameter.actual_temp <= MIN_ACTUAL_TEMP)
+								{
+									this->handle_error_state = HANDLE_LOW_TEMP_ERR;
+									this->system_parameter.error_time = 0;
+									get_step = 1;
+									break;
+								}
+							}
+							
 						}
 					}
 				}
@@ -483,21 +522,14 @@ void pwm_control(HA01_Handle *this)
 		
     if (last_set_temp != set_temp)
     {
-//		PID_Clear_I(&handle_pid);
-        handle_pid.SumError = handle_pid.SumError / 2;
+//        handle_pid.SumError = handle_pid.SumError / 2;
         this->system_parameter.temp_linear_data = linear_correction(set_temp);
         last_set_temp  = set_temp;
     }
 	
-//	this->system_parameter.actual_temp = get_adcval_average(ADC_CHANNEL_10,16) >> 2;
-
-//	this->system_parameter.actual_temp  = get_adcval_filtered(ADC_CHANNEL_10) >> 2;
-	
 	this->system_parameter.actual_temp = move_average_filter(&handle_temp) >> 2;
 	
-	
-//    temp = this->system_parameter.actual_temp + this->system_parameter.temp_linear_data - this->system_parameter.cal_data;
-	temp = this->system_parameter.actual_temp- this->system_parameter.cal_data;
+	temp = this->system_parameter.actual_temp - this->system_parameter.cal_data + this->system_parameter.temp_linear_data;
 	
 	if(sFWHA01_t.run_mode == Cold_Mode)
 	{

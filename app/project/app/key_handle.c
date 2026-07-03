@@ -103,6 +103,7 @@ void get_key(void)
 			sFWHA01_t.general_parameter.ch = 1;
 			sFWHA01_t.general_parameter.set_temp_time = SET_TEMP_SHOW_TIMES;
 			sFWHA01_t.general_parameter.set_wind_time = SET_TEMP_SHOW_TIMES;
+			lock_temp_flag = false;
 			sbeep.cmd = BEEP_SHORT;
 		}
         break;
@@ -150,6 +151,7 @@ void get_key(void)
 			sFWHA01_t.general_parameter.ch = 2;
 			sFWHA01_t.general_parameter.set_temp_time = SET_TEMP_SHOW_TIMES;
 			sFWHA01_t.general_parameter.set_wind_time = SET_TEMP_SHOW_TIMES;
+			lock_temp_flag = false;
 			sbeep.cmd = BEEP_SHORT;
 		}
         break;
@@ -197,6 +199,7 @@ void get_key(void)
 			sFWHA01_t.general_parameter.ch = 3;
 			sFWHA01_t.general_parameter.set_temp_time = SET_TEMP_SHOW_TIMES;
 			sFWHA01_t.general_parameter.set_wind_time = SET_TEMP_SHOW_TIMES;
+			lock_temp_flag = false;
 			sbeep.cmd = BEEP_SHORT;
 		}
         break;
@@ -304,6 +307,7 @@ void get_key(void)
 					sFWHA01_t.system_parameter.last_set_temp_f_display = RESET_VALUE;
 					sFWHA01_t.general_parameter.set_temp_time = SET_TEMP_SHOW_TIMES;
 					sFWHA01_t.general_parameter.set_wind_time = SET_TEMP_SHOW_TIMES;
+					lock_temp_flag = false;
 				}
 			}
 		}
@@ -447,6 +451,7 @@ void get_key(void)
 					sFWHA01_t.system_parameter.last_set_temp_f_display = RESET_VALUE;
 					sFWHA01_t.general_parameter.set_temp_time = SET_TEMP_SHOW_TIMES;
 					sFWHA01_t.general_parameter.set_wind_time = SET_TEMP_SHOW_TIMES;
+					lock_temp_flag = false;
 				}
 			}
 		}
@@ -601,6 +606,7 @@ void get_key(void)
 					sFWHA01_t.system_parameter.last_set_temp_f_display = RESET_VALUE;
 					sFWHA01_t.general_parameter.set_temp_time = SET_TEMP_SHOW_TIMES;
 					sFWHA01_t.general_parameter.set_wind_time = SET_TEMP_SHOW_TIMES;
+					lock_temp_flag = false;
 				}
 			}
 		}
@@ -675,6 +681,7 @@ void get_key(void)
 				sFWHA01_t.system_parameter.last_cold_mode_set_air = 0x00;
 				sFWHA01_t.system_parameter.last_curve_cold_mode_air_data = 0x00;
 				sFWHA01_t.general_parameter.set_wind_time = SET_TEMP_SHOW_TIMES;
+				lock_temp_flag = false;
 			}
 		}
 		else if(sFWHA01_t.short_key_mode == POWER_MODE)
@@ -748,6 +755,7 @@ void get_key(void)
 					sFWHA01_t.system_parameter.last_cold_mode_set_air = 0x00;
 					sFWHA01_t.system_parameter.last_curve_cold_mode_air_data = 0x00;
 					sFWHA01_t.general_parameter.set_wind_time = SET_TEMP_SHOW_TIMES;
+					lock_temp_flag = false;
 				}
 				else
 				{
@@ -782,6 +790,7 @@ void get_key(void)
 			sFWHA01_t.system_parameter.last_cold_mode_set_air = 0x00;
 			sFWHA01_t.system_parameter.last_curve_cold_mode_air_data = 0x00;
 			sFWHA01_t.general_parameter.set_wind_time = SET_TEMP_SHOW_TIMES;
+			lock_temp_flag = false;
 			
 		}
 		else if(sFWHA01_t.long_key_mode == POWER_MODE)
