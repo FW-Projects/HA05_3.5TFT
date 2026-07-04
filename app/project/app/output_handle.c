@@ -226,7 +226,7 @@ static void get_handle_error_state(HA01_Handle *this)
 					}
 
 					/* 5 * 200  = 1000ms */
-					if (this->system_parameter.error_time > ERROR_TIME * 2)
+					if (this->system_parameter.error_time > ERROR_TIME * 4)
 					{
 						if (this->system_parameter.actual_air < MIN_ACTUAL_AIR)
 						{
