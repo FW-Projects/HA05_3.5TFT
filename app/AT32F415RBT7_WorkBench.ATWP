@@ -339,7 +339,7 @@
     </PINInfo>
     <ProjectInfomation>
         <ProjectName>AT32F415RBT7_WorkBench</ProjectName>
-        <ProjectLocation>D:/AT32_project/HA01/AT32F415RBT7/app</ProjectLocation>
+        <ProjectLocation>D:/AT32_project/HA05/AT32F415RBT7/app</ProjectLocation>
         <ToolchainIDE>MDK_V5</ToolchainIDE>
         <ARMCompiler>0</ARMCompiler>
         <KeepUserCode>true</KeepUserCode>

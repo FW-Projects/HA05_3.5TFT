@@ -291,7 +291,7 @@ void SysTick_Handler(void)
 	ec11_run_time--;
 	if(ec11_run_time == 0)
 	{
-		ec11_run_time = 1;
+		ec11_run_time = 2;
 		ec11_handle();
 	}
 
