@@ -512,11 +512,12 @@ ARM Macro Assembler    Page 8
   340 0000001C                 END
               00000000 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4 --fpu=
-SoftVFP --depend=.\objects\startup_at32f415.d -o.\objects\startup_at32f415.o -I
-D:\keil5.42\ArteryTek\AT32F415_DFP\2.1.6\Device\Include --predefine="__MICROLIB
- SETA 1" --predefine="__UVISION_VERSION SETA 542" --predefine="AT32F415RBT7 SET
-A 1" --list=.\listings\startup_at32f415.lst startup_at32f415.s
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --fpu=SoftVFP
+ --depend=.\objects\startup_at32f415.d -o.\objects\startup_at32f415.o -I"D:\kei
+l5\Keil MDK 5.34\Keil MDK v5.34\ArteryTek\AT32F415_DFP\2.1.9\Device\Include" --
+predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 534" --predef
+ine="AT32F415RBT7 SETA 1" --list=.\listings\startup_at32f415.lst startup_at32f4
+15.s
 
 
 

@@ -193,7 +193,7 @@ static void get_handle_error_state(HA01_Handle *this)
 			{
 				this->system_parameter.error_time++;
 				
-				if(this->system_parameter.error_time > ERROR_TIME * 2)
+				if(this->system_parameter.error_time > ERROR_TIME*2 )
 				{
 					this->handle_error_state = HANDLE_FAN_ERROR;
 					this->system_parameter.error_time = 0x00;
@@ -213,8 +213,22 @@ static void get_handle_error_state(HA01_Handle *this)
 				{
 					this->system_parameter.error_time++;
 
+					
+					/* 5 * 200  = 1000ms */
+					if (this->system_parameter.error_time > ERROR_TIME*2)
+					{
+						if (this->system_parameter.actual_air < MIN_ACTUAL_AIR)
+						{
+							this->handle_error_state = HANDLE_FAN_ERROR;
+							this->system_parameter.error_time = 0;
+							get_step = 1;
+							break;
+						}
+
+					} 
+
 					/* 5 * 200 / 2 = 500ms */
-					if (this->system_parameter.error_time > ERROR_TIME / 2)
+					if (this->system_parameter.error_time > ERROR_TIME)
 					{
 						if (this->system_parameter.actual_temp >= MAX_ACTUAL_TEMP)
 						{
@@ -224,18 +238,11 @@ static void get_handle_error_state(HA01_Handle *this)
 							break;
 						}
 					}
-
-					/* 5 * 200  = 1000ms */
-					if (this->system_parameter.error_time > ERROR_TIME * 4)
+					
+					/* 5 * 200 / 2 = 500ms */
+					if (this->system_parameter.error_time > ERROR_TIME *4)
 					{
-						if (this->system_parameter.actual_air < MIN_ACTUAL_AIR)
-						{
-							this->handle_error_state = HANDLE_FAN_ERROR;
-							this->system_parameter.error_time = 0;
-							get_step = 1;
-							break;
-						}
-						else if (this->system_parameter.actual_temp <= MIN_ACTUAL_TEMP)
+						if (this->system_parameter.actual_temp <= MIN_ACTUAL_TEMP)
 						{
 							if(this->system_parameter.set_temp < 150)
 							{
@@ -260,6 +267,9 @@ static void get_handle_error_state(HA01_Handle *this)
 							
 						}
 					}
+
+
+					
 				}
 				else
 				{

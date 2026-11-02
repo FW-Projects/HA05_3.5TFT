@@ -810,7 +810,7 @@ void show_cal_temp(void)
 void show_curve(HA01_Handle *this)
 {
     static bool first_in = false;
-    static uint8_t bar_value = 0;
+    static int8_t bar_value = 0;
     static uint8_t air_value = 0;
 	static uint16_t display_air = 0;
     if (this->page == CURVE_PAGE)
@@ -890,6 +890,8 @@ void show_curve(HA01_Handle *this)
 					bar_value = sFWHA01_t.system_parameter.set_temp * 0.2;
 				else
 					bar_value = (sFWHA01_t.system_parameter.set_temp_f_display- 122) * 0.108;
+				
+				
 			}
 			else
 			{
@@ -897,10 +899,36 @@ void show_curve(HA01_Handle *this)
 					bar_value = (sFWHA01_t.run_mode == Power_Mode)
 								? (sFWHA01_t.system_parameter.actual_temp - POWER_TEMP) * 0.2
 								: sFWHA01_t.system_parameter.actual_temp * 0.2;
-				else // FAHRENHEIT
-					bar_value = (sFWHA01_t.run_mode == Power_Mode)
+				else// FAHRENHEIT
+				{
+				    bar_value = (sFWHA01_t.run_mode == Power_Mode)
 								? (sFWHA01_t.system_parameter.actual_temp_f_display - 122) * 0.108
 								: sFWHA01_t.system_parameter.actual_temp_f_display * 0.108;
+				}					
+					
+				if(bar_value<=sFWHA01_t.system_parameter.cpu_temp)
+					
+				bar_value = sFWHA01_t.system_parameter.cpu_temp;
+				
+//							if(sFWHA01_t.temp_unit == FAHRENHEIT)
+//							{
+//								sFWHA01_t.system_parameter.actual_temp_f_display = 9 * sFWHA01_t.system_parameter.actual_temp / 5 + 32;
+//								disp_actual = sFWHA01_t.system_parameter.actual_temp_f_display  - 122  + cal + (9 * (sFWHA01_t.system_parameter.temp_linear_data) / 5 + 32);
+//								if(disp_actual < sFWHA01_t.system_parameter.cpu_temp_f)
+//									disp_actual = sFWHA01_t.system_parameter.cpu_temp_f;
+//							}
+//							else
+//							{
+//								disp_actual = sFWHA01_t.system_parameter.actual_temp  - POWER_TEMP + cal + sFWHA01_t.system_parameter.temp_linear_data;
+//								if(disp_actual < sFWHA01_t.system_parameter.cpu_temp)
+//									disp_actual = sFWHA01_t.system_parameter.cpu_temp;
+//							}
+//				
+				
+				
+				
+				
+				
 			}
 
             DrawProgressBar(26, 90, 39, 256, 15, 15, bar_value, 0xfca0, 0x18a3, TEMP_BAR_ICON);

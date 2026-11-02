@@ -218,7 +218,7 @@ int main(void)
   check_and_show_modul();
   
   /* 等待系统上电稳定延时 */
-  wk_delay_ms(500);
+  wk_delay_ms(1800);
   /* add user code end 2 */
 
   while(1)

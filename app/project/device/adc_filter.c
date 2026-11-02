@@ -31,13 +31,35 @@ uint8_t filter_init(filter_t * filter,adc_channel_select_type adc_channel)
 }
 
 
+//u16 get_adcval(adc_channel_select_type adc_channel)
+//{
+//	adc_flag_clear(ADC1, ADC_CCE_FLAG);
+//    adc_ordinary_channel_set(ADC1, adc_channel, 1,
+//                             ADC_SAMPLETIME_239_5);	 
+//    adc_ordinary_software_trigger_enable(ADC1, TRUE);						 
+//    while (!adc_flag_get(ADC1, ADC_CCE_FLAG));								 
+//    return adc_ordinary_conversion_data_get(ADC1);							 
+//}
+
 u16 get_adcval(adc_channel_select_type adc_channel)
 {
+	volatile static uint16_t error_time = 0; 
 	adc_flag_clear(ADC1, ADC_CCE_FLAG);
     adc_ordinary_channel_set(ADC1, adc_channel, 1,
                              ADC_SAMPLETIME_239_5);	 
-    adc_ordinary_software_trigger_enable(ADC1, TRUE);						 
-    while (!adc_flag_get(ADC1, ADC_CCE_FLAG));								 
+    adc_ordinary_software_trigger_enable(ADC1, TRUE);
+    error_time = 0;	
+    while (!adc_flag_get(ADC1, ADC_CCE_FLAG))
+	{
+	    error_time++;
+		if(error_time >= 300)
+		{
+		    error_time = 0;
+			wk_adc1_init();
+			goto end;
+		} 
+	}
+	end:	
     return adc_ordinary_conversion_data_get(ADC1);							 
 }
 

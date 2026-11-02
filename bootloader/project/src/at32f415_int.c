@@ -37,7 +37,7 @@
 
 /* private typedef -----------------------------------------------------------*/
 /* add user code begin private typedef */
-#define SOFTWARE_VERSTION "V1.1.0"
+#define SOFTWARE_VERSTION "V1.1.4"
 #define HARDWARE_VERSTION "V1.0.1"
 /* add user code end private typedef */
 
@@ -493,6 +493,12 @@ void usart1_send_error(void)
 
 void usart1_connet_pc(void)
 {
+	static bool first_in = true;
+	if(first_in)
+	{
+		init_version_parse();
+	    first_in = false;
+	}
     uint32_t crc_value = 0;
     usart1_tx_buff[0] = 0xD1;
     usart1_tx_buff[1] = 0x01;

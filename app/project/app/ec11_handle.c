@@ -25,6 +25,25 @@ void ec11_handle(void)
 	air_analyze_result = EC11_Analyze(&air_ec11, air_scan_result);
 	air_ec11_get_event(air_analyze_result);
 	air_handle();
+	
+	if(temp_analyze_result != EC11_ANALYZE_NO_ACTION ||
+	   air_analyze_result != EC11_ANALYZE_NO_ACTION)
+	{
+	    sFWHA01_t.ec11_setting_flag = true;
+		sFWHA01_t.ec11_setting_time = 0;
+	}
+	
+	if(sFWHA01_t.ec11_setting_flag)
+	{
+	    sFWHA01_t.ec11_setting_time++;
+		if(sFWHA01_t.ec11_setting_time>=250)
+		{
+		    sFWHA01_t.ec11_setting_flag = false;
+		    sFWHA01_t.ec11_setting_time = 0;
+		}
+	}
+	
+	
 }
 
 void air_ec11_get_event(EC11_AnalyzeResult state_air)

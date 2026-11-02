@@ -1,6 +1,11 @@
 ./objects/at32_usart.o: ..\device\at32_Usart.c ..\device\at32_usart.h \
   ..\..\libraries\cmsis\cm4\device_support\at32f415.h \
   ..\..\libraries\cmsis\cm4\core_support\core_cm4.h \
+  D:\keil5\Keil\ MDK\ 5.34\Keil\ MDK\ v5.34\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  ..\..\libraries\cmsis\cm4\core_support\cmsis_version.h \
+  ..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h \
+  ..\..\libraries\cmsis\cm4\core_support\cmsis_armclang.h \
+  ..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h \
   ..\..\libraries\cmsis\cm4\device_support\system_at32f415.h \
   ..\..\libraries\drivers\inc\at32f415_def.h ..\inc\at32f415_conf.h \
   ..\..\libraries\drivers\inc\at32f415_adc.h \
@@ -15,5 +20,6 @@
   ..\..\libraries\drivers\inc\at32f415_spi.h \
   ..\..\libraries\drivers\inc\at32f415_tmr.h \
   ..\..\libraries\drivers\inc\at32f415_usart.h \
-  ..\..\libraries\drivers\inc\at32f415_wdt.h ..\device\util_queue.h \
-  ..\app\userconfig.h
+  ..\..\libraries\drivers\inc\at32f415_wdt.h \
+  D:\keil5\Keil\ MDK\ 5.34\Keil\ MDK\ v5.34\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  ..\device\util_queue.h ..\app\userconfig.h

@@ -2,7 +2,7 @@
 #define __ADC_FILTER_H
 
 #include "at32f415.h"
-
+#include "wk_adc.h"
 #define WINDOW_SIZE 10
 typedef struct
 {

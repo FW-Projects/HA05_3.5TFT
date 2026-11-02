@@ -1,6 +1,12 @@
 ./objects/main.o: ..\src\main.c ..\inc\at32f415_wk_config.h \
+  D:\keil5\Keil\ MDK\ 5.34\Keil\ MDK\ v5.34\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\..\libraries\cmsis\cm4\device_support\at32f415.h \
   ..\..\libraries\cmsis\cm4\core_support\core_cm4.h \
+  D:\keil5\Keil\ MDK\ 5.34\Keil\ MDK\ v5.34\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  ..\..\libraries\cmsis\cm4\core_support\cmsis_version.h \
+  ..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h \
+  ..\..\libraries\cmsis\cm4\core_support\cmsis_armclang.h \
+  ..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h \
   ..\..\libraries\cmsis\cm4\device_support\system_at32f415.h \
   ..\..\libraries\drivers\inc\at32f415_def.h ..\inc\at32f415_conf.h \
   ..\..\libraries\drivers\inc\at32f415_adc.h \
@@ -16,12 +22,18 @@
   ..\..\libraries\drivers\inc\at32f415_tmr.h \
   ..\..\libraries\drivers\inc\at32f415_usart.h \
   ..\..\libraries\drivers\inc\at32f415_wdt.h ..\inc\wk_adc.h \
-  ..\inc\wk_crc.h ..\inc\wk_debug.h ..\inc\wk_spi.h ..\inc\wk_tmr.h \
-  ..\inc\wk_usart.h ..\inc\wk_wdt.h ..\inc\wk_dma.h ..\inc\wk_gpio.h \
-  ..\inc\wk_system.h ..\system\tmt.h ..\app\lcd_handle.h ..\device\lcd.h \
-  ..\app\key_handle.h ..\device\key.h ..\app\beep_handle.h \
-  ..\device\beep.h ..\app\output_handle.h ..\app\HA01_handle.h \
+  ..\inc\at32f415_wk_config.h ..\inc\wk_crc.h ..\inc\wk_debug.h \
+  ..\inc\wk_spi.h ..\inc\wk_tmr.h ..\inc\wk_usart.h ..\inc\wk_wdt.h \
+  ..\inc\wk_dma.h ..\inc\wk_gpio.h ..\inc\wk_system.h ..\system\tmt.h \
+  ..\app\lcd_handle.h ..\device\lcd.h \
+  D:\keil5\Keil\ MDK\ 5.34\Keil\ MDK\ v5.34\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ..\app\key_handle.h ..\device\key.h ..\app\lcd_handle.h \
+  ..\app\beep_handle.h ..\device\beep.h ..\app\output_handle.h \
+  ..\app\HA01_handle.h \
+  D:\keil5\Keil\ MDK\ 5.34\Keil\ MDK\ v5.34\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\app\flash_handle.h ..\device\flash.h ..\app\work_handle.h \
   ..\device\at32_spiflash.h ..\system\PID_operation.h \
-  ..\app\ec11_handle.h ..\device\EncoderEC11.h ..\device\adc_filter.h \
-  ..\app\PC_comm_handle.h ..\device\at32_Usart.h ..\app\iap.h
+  ..\app\HA01_handle.h ..\app\ec11_handle.h ..\device\EncoderEC11.h \
+  ..\device\adc_filter.h ..\app\PC_comm_handle.h \
+  D:\keil5\Keil\ MDK\ 5.34\Keil\ MDK\ v5.34\ARM\ARMCLANG\Bin\..\include\string.h \
+  ..\device\at32_Usart.h ..\app\iap.h

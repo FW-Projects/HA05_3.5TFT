@@ -3,7 +3,7 @@
 #include "at32f415.h"
 #include "stdbool.h"
 
-#define SOFTWARE_VERSTION "V1.1.0"
+#define SOFTWARE_VERSTION "V1.1.4"
 #define HARDWARE_VERSTION "V1.0.1"
 
 
@@ -516,6 +516,13 @@ typedef struct
     bool init_flag;
 	bool fan_run_flag;
 	bool flash_updata;
+	
+	bool ec11_setting_flag;
+	uint16_t ec11_setting_time;
+	
+	bool key_setting_flag;
+	uint16_t key_setting_time;
+	
     model_e model;
 
 

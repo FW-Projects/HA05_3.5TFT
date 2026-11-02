@@ -2,9 +2,9 @@
 #define __OUTPUT_H
 #include "flash.h"
 
-#define FLASH_HANDLE_TIME 50
+#define FLASH_HANDLE_TIME 5
 #define DATA_SIZE 2
-#define FLASH_MENBER 22
+#define FLASH_MENBER 21
 
 #define MODEL_ADDR             (0x08000000 + 1024 * 123)   /* ÉÈÇø123 */
 
